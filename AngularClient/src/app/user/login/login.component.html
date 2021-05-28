@@ -1,0 +1,21 @@
+<br>
+<div class="text-center">
+    <img src="/assets/images/user.png" class="mx-auto d-block">
+    <div class="form-group text-white">Icons made by <a href="https://www.freepik.com" title="Freepik">Freepik</a> from
+        <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div><br>
+</div>
+<form #form='ngForm' class="mb-4" autocomplete="off" (submit)="onSubmit(form)">
+    <div class="form-group">
+        <label>Username</label>
+        <input class="form-control" #UserName="ngModel" name="UserName" [(ngModel)]="formModel.UserName" required>
+    </div><br>
+    <div class="form-group">
+        <label>Password</label>
+        <input type="password" class="form-control" #Password="ngModel" name="Password" [(ngModel)]="formModel.Password" required>
+    </div><br>
+    <div class="form-row">
+        <div class="form-group col-md-8 offset-md-2  text-center">
+            <button type="submit" class="btn btn-lg btn-block" [disabled]="form.invalid">Login</button>
+        </div>
+    </div>
+</form>
