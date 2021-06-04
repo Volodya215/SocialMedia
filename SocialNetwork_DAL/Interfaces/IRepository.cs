@@ -21,7 +21,7 @@ namespace SocialNetwork_DAL.Interfaces
         Task AddAsync(TEntity entity);
 
         // Update
-        void Update(TEntity entity);
+        Task Update(TEntity entity);
 
         // Removing object
         void Delete(TEntity entity);

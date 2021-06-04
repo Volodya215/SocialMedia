@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using SocialNetwork_BLL.Interfaces;
+using SocialNetwork_BLL.Models;
 using SocialNetwork_DAL.Entities;
 using System;
 using System.Collections.Generic;
@@ -15,13 +17,15 @@ namespace SocialNetwork_Web.Controllers
     public class UserProfileController : ControllerBase
     {
         private readonly UserManager<User> _userManager;
-        public UserProfileController(UserManager<User> userManager)
+        private readonly IUserProfileService _service;
+        public UserProfileController(UserManager<User> userManager, IUserProfileService service)
         {
             _userManager = userManager;
+            _service = service;
         }
 
         [HttpGet]
-        [Authorize]
+        [Authorize(Roles = "Customer")]
         // GET: /api/UserProfile
         public async Task<object> GetUserProfile()
         {
@@ -36,28 +40,75 @@ namespace SocialNetwork_Web.Controllers
             };
         }
 
-        [HttpGet]
-        [Authorize(Roles = "Admin")]
-        [Route("ForAdmin")]
-        public string GetForAdmin()
+        [HttpGet("{userName}")]
+       // [Authorize(Roles = "Customer")]
+        // GET: /api/UserProfile/Volodya
+        public ActionResult<Object> GetUserProfile(string userName)
         {
-            return "Web method for admin";
+            if (userName == default)
+                return BadRequest();
+            try
+            {
+                var userProfile = _service.GetUserProfileModelByUserName(userName);
+                if (userProfile == default)
+                    return Ok(new UserProfileModel());
+
+                return Ok(new
+                {
+                    userProfile.City,
+                    userProfile.Hobby,
+                    userProfile.Work,
+                    userProfile.About
+                });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest();
+            }
         }
 
-        [HttpGet]
-        [Authorize(Roles = "Customer")]
-        [Route("ForCustomer")]
-        public string GetForCustomer()
-        {
-            return "Web method for Customer";
-        }
 
-        [HttpGet]
-        [Authorize(Roles = "Admin, Customer")]
-        [Route("ForAdminOrCustomer")]
-        public string GetForAdminOrCustomer()
-        {
-            return "Web method for admin or Customer";
-        }
+       // [HttpGet("{userName}/followers")]
+       //// [Authorize(Roles = "Customer")]
+       // // GET: /api/UserProfile/Volodya/followers
+       // public ActionResult<IEnumerable<string>> GetUserFollowers(string userName)
+       // {
+       //     if (userName == default)
+       //         return BadRequest();
+       //     try
+       //     {
+       //         var followers = _service.GetListOfFollowersByUserName(userName);
+       //         if (followers == default)
+       //             return NotFound();
+
+       //         return Ok(followers);
+       //     }
+       //     catch (Exception)
+       //     {
+       //         return BadRequest();
+       //     }
+       // }
+
+       // [HttpGet("{userName}/following")]
+       //// [Authorize(Roles = "Customer")]
+       // // GET: /api/UserProfile/Volodya/following
+       // public ActionResult<IEnumerable<string>> GetUserFollowing(string userName)
+       // {
+       //     if (userName == default)
+       //         return BadRequest();
+       //     try
+       //     {
+       //         var followers = _service.GetListOfFollowingByUserName(userName);
+       //         if (followers == default)
+       //             return NotFound();
+
+       //         return Ok(followers);
+       //     }
+       //     catch (Exception)
+       //     {
+       //         return BadRequest();
+       //     }
+       // }
+
     }
 }

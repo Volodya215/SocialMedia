@@ -14,6 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\SocialNetwork_BLL\SocialNetwork_BLL.csproj" />
     <ProjectReference Include="..\SocialNetwork_DAL\SocialNetwork_DAL.csproj" />
   </ItemGroup>
 

@@ -1,22 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Text;
 
-namespace SocialNetwork_DAL.Entities
+namespace SocialNetwork_BLL.Models
 {
-    public class Message : BaseEntity
+    public class MessageModel
     {
-        [Required]
+        public int Id { get; set; }
         public string AuthorId { get; set; }
-        [Required]
         public int ChatId { get; set; }
-        [Required]
         public string Content { get; set; }
         public DateTime MessageTime { get; set; }
 
-        public Chat Chat { get; set; }
-
-        public User Author { get; set; }
     }
 }

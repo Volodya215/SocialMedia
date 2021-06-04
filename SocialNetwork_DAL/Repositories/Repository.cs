@@ -23,12 +23,14 @@ namespace SocialNetwork_DAL.Repositories
 
         public Task AddAsync(TEntity entity)
         {
-            return _entities.AddAsync(entity).AsTask();
+            _entities.Add(entity);
+            return Context.SaveChangesAsync();
         }
 
         public void Delete(TEntity entity)
         {
             _entities.Remove(entity);
+            Context.SaveChanges();
         }
 
         public async Task DeleteByIdAsync(int id)
@@ -57,11 +59,18 @@ namespace SocialNetwork_DAL.Repositories
             return _entities.OrderBy(condition).ToList();
         }
 
-        public void Update(TEntity entity)
+        public Task Update(TEntity entity)
         {
             Context.Entry(entity).State = EntityState.Modified;
 
             Context.SaveChanges();
+
+            var toUpdate = _entities.FirstOrDefault(x => x.Id == entity.Id);
+            if (toUpdate != null)
+                toUpdate = entity;
+
+            Context.Update(toUpdate);
+            return Context.SaveChangesAsync();
         }
     }
 }

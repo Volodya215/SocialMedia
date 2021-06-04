@@ -1,3 +1,4 @@
+using AutoMapper;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -12,12 +13,15 @@ using Microsoft.IdentityModel.Tokens;
 using SocialNetwork_DAL;
 using SocialNetwork_DAL.Entities;
 using SocialNetwork_DAL.Interfaces;
-using SocialNetwork_Web.Models;
+using SocialNetwork_BLL;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using SocialNetwork_BLL.Services;
+using SocialNetwork_BLL.Interfaces;
+using SocialNetwork_BLL.Models;
 
 namespace SocialNetwork_Web
 {
@@ -42,6 +46,21 @@ namespace SocialNetwork_Web
                 options.UseSqlServer(Configuration.GetConnectionString("SocialNetwork"));
             });
             services.AddTransient<IUnitOfWork, UnitOfWork>();
+
+            // Inject Mapping
+            var mapperConfig = new MapperConfiguration(mc =>
+            {
+                mc.AddProfile(new AutomapperProfile());
+            });
+            IMapper mapper = mapperConfig.CreateMapper();
+            services.AddSingleton(mapper);
+
+            services.AddTransient<IUserProfileService, UserProfileService>();
+            services.AddTransient<IPostService, PostService>();
+            services.AddTransient<IChatService, ChatService>();
+            services.AddTransient<IMessageService, MessageService>();
+            services.AddTransient<IUserService, UserService>();
+            services.AddTransient<IBloggerSubscriberService, BloggerSubscriberService>();
 
             services.AddDefaultIdentity<User>().AddRoles<IdentityRole>().AddEntityFrameworkStores<SocialNetworkContext>();
 

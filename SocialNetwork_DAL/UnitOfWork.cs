@@ -18,6 +18,7 @@ namespace SocialNetwork_DAL
         public IMessageRepository MessageRepository { get; private set; }
 
         public IChatRepository ChatRepository { get; private set; }
+        public IBloggerSubscriberRepository BloggerSubscriberRepository { get; private set; }
 
         public UnitOfWork(DbContextOptions option)
         {
@@ -26,6 +27,7 @@ namespace SocialNetwork_DAL
             PostRepository = new PostRepository(_context);
             MessageRepository = new MessageRepository(_context);
             ChatRepository = new ChatRepository(_context);
+            BloggerSubscriberRepository = new BloggerSubscriberRepository(_context);
         }
 
         public Task<int> SaveAsync()

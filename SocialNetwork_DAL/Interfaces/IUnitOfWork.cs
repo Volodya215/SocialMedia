@@ -10,7 +10,8 @@ namespace SocialNetwork_DAL.Interfaces
         IUserProfileRepository UserProfileRepository { get; }
         IPostRepository PostRepository { get; }
         IMessageRepository MessageRepository { get; }
-        IChatRepository ChatRepository { get;  }
+        IChatRepository ChatRepository { get; }
+        IBloggerSubscriberRepository BloggerSubscriberRepository { get; }
 
         Task<int> SaveAsync();
     }

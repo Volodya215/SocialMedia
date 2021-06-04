@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Text;
 
-namespace SocialNetwork_Web.Models
+namespace SocialNetwork_BLL.Models
 {
     public class UserModel
     {
@@ -12,5 +11,8 @@ namespace SocialNetwork_Web.Models
         public string Password { get; set; }
         public string FullName { get; set; }
         public string Role { get; set; } = "Customer";
+        //public UserProfileModel UserProfile { get; set; }
+        public int UserProfileId { get; set; }
+        public ICollection<int> PostsIds { get; set; }
     }
 }

@@ -10,8 +10,8 @@ using SocialNetwork_DAL;
 namespace SocialNetwork_DAL.Migrations
 {
     [DbContext(typeof(SocialNetworkContext))]
-    [Migration("20210527211322_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20210602220536_Initial-Migration")]
+    partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -227,6 +227,28 @@ namespace SocialNetwork_DAL.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("SocialNetwork_DAL.Entities.BloggerSubscriber", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("BloggerId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("SubscriberId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BloggerId");
+
+                    b.HasIndex("SubscriberId");
+
+                    b.ToTable("BloggerSubscribers");
+                });
+
             modelBuilder.Entity("SocialNetwork_DAL.Entities.Chat", b =>
                 {
                     b.Property<int>("Id")
@@ -256,10 +278,8 @@ namespace SocialNetwork_DAL.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("AuthorId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("AuthorId1")
+                    b.Property<string>("AuthorId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("ChatId")
@@ -274,7 +294,7 @@ namespace SocialNetwork_DAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AuthorId1");
+                    b.HasIndex("AuthorId");
 
                     b.HasIndex("ChatId");
 
@@ -299,20 +319,13 @@ namespace SocialNetwork_DAL.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("UserId1")
+                    b.Property<string>("UserId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
-
-                    b.Property<int?>("UserProfileId")
-                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId1");
-
-                    b.HasIndex("UserProfileId");
+                    b.HasIndex("UserId");
 
                     b.ToTable("Posts");
                 });
@@ -334,6 +347,7 @@ namespace SocialNetwork_DAL.Migrations
                         .HasColumnType("nvarchar(150)");
 
                     b.Property<string>("UserId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Work")
@@ -342,8 +356,7 @@ namespace SocialNetwork_DAL.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("UserId")
-                        .IsUnique()
-                        .HasFilter("[UserId] IS NOT NULL");
+                        .IsUnique();
 
                     b.ToTable("UserProfiles");
                 });
@@ -354,16 +367,6 @@ namespace SocialNetwork_DAL.Migrations
 
                     b.Property<string>("FullName")
                         .HasColumnType("nvarchar(150)");
-
-                    b.Property<int?>("UserProfileId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("UserProfileId1")
-                        .HasColumnType("int");
-
-                    b.HasIndex("UserProfileId");
-
-                    b.HasIndex("UserProfileId1");
 
                     b.HasDiscriminator().HasValue("User");
                 });
@@ -419,6 +422,17 @@ namespace SocialNetwork_DAL.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("SocialNetwork_DAL.Entities.BloggerSubscriber", b =>
+                {
+                    b.HasOne("SocialNetwork_DAL.Entities.User", "Blogger")
+                        .WithMany()
+                        .HasForeignKey("BloggerId");
+
+                    b.HasOne("SocialNetwork_DAL.Entities.User", "Subscriber")
+                        .WithMany()
+                        .HasForeignKey("SubscriberId");
+                });
+
             modelBuilder.Entity("SocialNetwork_DAL.Entities.Chat", b =>
                 {
                     b.HasOne("SocialNetwork_DAL.Entities.User", "FirstUser")
@@ -434,7 +448,9 @@ namespace SocialNetwork_DAL.Migrations
                 {
                     b.HasOne("SocialNetwork_DAL.Entities.User", "Author")
                         .WithMany()
-                        .HasForeignKey("AuthorId1");
+                        .HasForeignKey("AuthorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("SocialNetwork_DAL.Entities.Chat", "Chat")
                         .WithMany("Messages")
@@ -446,30 +462,19 @@ namespace SocialNetwork_DAL.Migrations
             modelBuilder.Entity("SocialNetwork_DAL.Entities.Post", b =>
                 {
                     b.HasOne("SocialNetwork_DAL.Entities.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId1");
-
-                    b.HasOne("SocialNetwork_DAL.Entities.UserProfile", null)
                         .WithMany("Posts")
-                        .HasForeignKey("UserProfileId");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("SocialNetwork_DAL.Entities.UserProfile", b =>
                 {
                     b.HasOne("SocialNetwork_DAL.Entities.User", "User")
                         .WithOne("UserProfile")
-                        .HasForeignKey("SocialNetwork_DAL.Entities.UserProfile", "UserId");
-                });
-
-            modelBuilder.Entity("SocialNetwork_DAL.Entities.User", b =>
-                {
-                    b.HasOne("SocialNetwork_DAL.Entities.UserProfile", null)
-                        .WithMany("Followers")
-                        .HasForeignKey("UserProfileId");
-
-                    b.HasOne("SocialNetwork_DAL.Entities.UserProfile", null)
-                        .WithMany("Following")
-                        .HasForeignKey("UserProfileId1");
+                        .HasForeignKey("SocialNetwork_DAL.Entities.UserProfile", "UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

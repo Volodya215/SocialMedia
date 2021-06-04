@@ -18,12 +18,12 @@ namespace SocialNetwork_DAL.Repositories
 
         public IQueryable<UserProfile> FindAllWithDetails()
         {
-            return _entities.Include(x => x.User).Include(x => x.Followers).Include(x => x.Following).Include(x => x.Posts);
+            return _entities.Include(x => x.User);
         }
 
         public Task<UserProfile> GetByIdWithDetailsAsync(int id)
         {
-            return _entities.Include(x => x.User).Include(x => x.Followers).Include(x => x.Following).Include(x => x.Posts).FirstOrDefaultAsync(x => x.Id == id);
+            return _entities.Include(x => x.User).FirstOrDefaultAsync(x => x.Id == id);
         }
 
         public SocialNetworkContext DbContext

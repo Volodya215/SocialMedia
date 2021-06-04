@@ -19,6 +19,7 @@ namespace SocialNetwork_DAL
         public DbSet<Post> Posts { get; set; }
         public DbSet<Chat> Chats { get; set; }
         public DbSet<Message> Messages { get; set; }
+        public DbSet<BloggerSubscriber> BloggerSubscribers { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder builder)
