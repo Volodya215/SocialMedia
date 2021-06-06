@@ -47,8 +47,12 @@ export class UserService {
     return this.http.post(this.BaseURI + '/User/Login', formData);
   }
 
-  getUserProfile() {
-    return this.http.get(this.BaseURI + '/UserProfile');
+  getUserProfile(userName: string) {
+    return this.http.get(this.BaseURI + '/UserProfile/' + userName);
+  }
+
+  getPageStatistic(userName: string) {
+    return this.http.get(this.BaseURI + "/User/" + userName + "/statistic");
   }
 
   roleMatch(allowedRoles: any[]): boolean {
@@ -63,7 +67,7 @@ export class UserService {
         isMatch = true;
         return false;
       }
-      return true; // TODO: Check that moment
+      return true;
     });
     return isMatch;
   }

@@ -16,6 +16,11 @@ import { HomeComponent } from './home/home.component';
 import { AuthInterceptor } from './auth/auth.interceptor';
 import { AdminPanelComponent } from './admin-panel/admin-panel.component';
 import { ForbiddenComponent } from './forbidden/forbidden.component';
+import { ShowPostComponent } from './show-post/show-post.component';
+import { AddPostComponent } from './add-post/add-post.component';
+import { PostService } from './shared/post.service';
+import { UserProfileComponent } from './user/user-profile/user-profile.component';
+
 
 @NgModule({
   declarations: [
@@ -25,7 +30,10 @@ import { ForbiddenComponent } from './forbidden/forbidden.component';
     LoginComponent,
     HomeComponent,
     AdminPanelComponent,
-    ForbiddenComponent
+    ForbiddenComponent,
+    ShowPostComponent,
+    AddPostComponent,
+    UserProfileComponent
   ],
   imports: [
     BrowserModule,
@@ -38,7 +46,7 @@ import { ForbiddenComponent } from './forbidden/forbidden.component';
     }),
     FormsModule
   ],
-  providers: [UserService,
+  providers: [UserService, PostService,
   {
     provide: HTTP_INTERCEPTORS,
     useClass: AuthInterceptor,

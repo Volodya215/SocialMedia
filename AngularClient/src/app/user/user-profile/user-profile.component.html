@@ -1,0 +1,40 @@
+<div class="page-heading">
+    <div class="media clearfix">
+        <div class="media-left pr30">
+            <a href="#">
+                <img class="media-object mw150" src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="...">
+            </a>
+        </div>
+        <div class="media-body va-m">
+            <h2 class="media-heading">{{userDetails?.userName}} </h2>
+            <p class="fs-3 text-center">Info</p>
+            <div>
+                <ul>
+                    <li><strong>FullName : </strong>{{userDetails?.fullName}}</li>
+                    <li><strong>Hobby : </strong>{{userDetails?.hobby}}</li>
+                    <li><strong>City : </strong>{{userDetails?.city}}</li>
+                    <li><strong>Work : </strong>{{userDetails?.work}}</li>
+                    <li><strong>About : </strong>{{userDetails?.about}}</li>
+                </ul>
+            </div>
+        </div>
+    </div><br>
+
+    <div class="row divider text-center">
+        <div class="col-xs-12 col-sm-4 emphasis">
+            <h2><strong>{{pageStatistic?.postsCount}}</strong></h2>
+            <p>Posts</p>
+            <button class="btn btn-info btn-block"><span class="fa fa-user"></span> Edit profile</button>
+        </div>
+        <div class="col-xs-12 col-sm-4 emphasis">
+            <h2><strong> {{pageStatistic?.followersCount}} </strong></h2>
+            <p>Followers</p>
+            <button class="btn btn-success btn-block"><span class="fa fa-plus-circle"></span> Follow  </button>
+        </div>
+        <div class="col-xs-12 col-sm-4 emphasis">
+            <h2><strong>{{pageStatistic?.followingCount}}</strong></h2>
+            <p>Following</p>
+            <button class="btn btn-success btn-block"><span class="fa fa-comment"></span> Message</button>
+        </div>
+    </div>
+</div>

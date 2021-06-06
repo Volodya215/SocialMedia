@@ -1,12 +1,127 @@
-<nav class="navbar navbar-dark bg-dark">
-    <a class="navbar-brand text-white">Social Network</a>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">Social Network</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="#">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Profile</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Messages</a>
+                </li>
+            </ul>
+            <form class="d-flex">
+                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success" type="submit">Search</button>
+            </form>
+        </div>
+    </div>
     <button class="btn btn-danger my-2 my-sm-0" (click)="onLogout()">Logout</button>
 </nav>
 
-<div class="card m-5" style="width:18rem" *ngIf="userDetails">
-    <ul class="list-group">
-        <li class="list-group-item"><strong>Username : </strong>{{userDetails.userName}}</li>
-        <li class="list-group-item"><strong>FullName : </strong>{{userDetails.fullName}}</li>
-        <li class="list-group-item"><strong>Email : </strong>{{userDetails.email}}</li>
-    </ul>
-</div>
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+<section id="content" class="container">
+    <!-- Begin .page-heading -->
+    <app-user-profile></app-user-profile>
+
+    <div class="row">
+        <div class="col-md-4">
+            <div class="panel">
+                <div class="panel-heading">
+                    <span class="panel-icon">
+                <i class="fa fa-star"></i>
+              </span>
+                    <span class="panel-title">Stock market </span>
+                </div>
+                <div class="panel-body pn">
+                    <table class="table mbn tc-icon-1 tc-med-2 tc-bold-last">
+                        <thead>
+                            <tr class="hidden">
+                                <th class="mw30">#</th>
+                                <th>Company</th>
+                                <th>Stock price </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <span class="fa fa-desktop text-warning"></span>
+                                </td>
+                                <td>Television</td>
+                                <td>
+                                    <i class="fa fa-caret-up text-info pr10"></i>$855,913</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span class="fa fa-microphone text-primary"></span>
+                                </td>
+                                <td>Radio</td>
+                                <td>
+                                    <i class="fa fa-caret-down text-danger pr10"></i>$349,712</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span class="fa fa-newspaper-o text-info"></span>
+                                </td>
+                                <td>Newspaper</td>
+                                <td>
+                                    <i class="fa fa-caret-up text-info pr10"></i>$1,259,742</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="panel">
+                <div class="panel-heading">
+                    <span class="panel-icon">
+                <i class="fa fa-pencil"></i>
+              </span>
+                    <span class="panel-title">World news</span>
+                </div>
+                <div class="panel-body pb5">
+
+                    <h6>Social network</h6>
+                    <h4>Facebook</h4>
+                    <p class="text-muted"> The Ukrainian stock exchange began trading shares of Facebook, Microsoft and Netflix. Facebook and Instagram have failed globally. The personal data of 530 million Facebook users has been made public.
+                    </p>
+
+                    <hr class="short br-lighter">
+
+                    <h6>Education</h6>
+
+                    <h4>Introductory campaign in Ukraine </h4>
+                    <p class="text-muted"> How to choose the right university: one principle and five rules from an educational expert.
+                    </p>
+
+                    <hr class="short br-lighter">
+
+                    <h6>Serials</h6>
+
+                    <h4>Friends Reunion</h4>
+                    <p class="text-muted pb10"> On May 27, HBO Max released Friends: The Reunion. In it, the stars of the series "Friends" gathered together and remembered the brightest moments of the show and answered questions about the filming of the series.
+                    </p>
+
+                    <hr class="short br-lighter">
+                    <h6>Advertisement</h6>
+
+                    <h4>Your advertisement could be here </h4>
+                    <p class="text-muted pb10"> Some information about your product
+                    </p>
+
+                </div>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <app-add-post></app-add-post>
+            <app-show-post></app-show-post>
+
+
+        </div>
+    </div>
+</section>

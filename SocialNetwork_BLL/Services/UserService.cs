@@ -45,7 +45,7 @@ namespace SocialNetwork_BLL.Services
                         new Claim("UserID", user.Id.ToString()),
                         new Claim(identityOptions.ClaimsIdentity.RoleClaimType, role.FirstOrDefault())
                     }),
-                    Expires = DateTime.UtcNow.AddMinutes(5),
+                    Expires = DateTime.UtcNow.AddDays(1),
                     SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(Encoding.UTF8.GetBytes(JWT_secret)), SecurityAlgorithms.HmacSha256Signature)
                 };
 

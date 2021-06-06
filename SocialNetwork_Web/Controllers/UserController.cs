@@ -83,7 +83,7 @@ namespace SocialNetwork_Web.Controllers
             try
             {
                 var token = await _service.LoginUser(model, _appSettings.JWT_Secret);
-                return Ok(new { token });
+                return Ok(new { token, model.UserName });
             }
             catch (Exception ex)
             {

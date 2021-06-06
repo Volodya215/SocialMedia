@@ -27,7 +27,7 @@ namespace SocialNetwork_BLL.Services
             if (model == default)
                 throw new SocialNetworkException("UserProfile is equal null");
 
-            if (model.Id <= 0 || model.UserId == default || model.Topic == default || model.Content == default)
+            if (model.UserId == default || model.Topic == default || model.Content == default)
                 throw new SocialNetworkException("Incorrect data in post model");
 
             return Database.PostRepository.AddAsync(_mapper.Map<Post>(model));
@@ -53,7 +53,7 @@ namespace SocialNetwork_BLL.Services
             if (userName == default)
                 throw new SocialNetworkException("Incorrect value of userName");
 
-            var posts = Database.PostRepository.FindAllWithDetails().Where(x => x.User.UserName == userName).AsEnumerable();
+            var posts = Database.PostRepository.FindAllWithDetails().Where(x => x.User.UserName == userName).OrderByDescending(x => x.DateOfPost).AsEnumerable();
 
             return _mapper.Map<IEnumerable<PostModel>>(posts);
         }

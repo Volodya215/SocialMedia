@@ -41,20 +41,24 @@ namespace SocialNetwork_Web.Controllers
         }
 
         [HttpGet("{userName}")]
-       // [Authorize(Roles = "Customer")]
+        // [Authorize(Roles = "Customer")]
         // GET: /api/UserProfile/Volodya
-        public ActionResult<Object> GetUserProfile(string userName)
+        public async Task<ActionResult<Object>> GetUserProfile(string userName)
         {
             if (userName == default)
                 return BadRequest();
             try
             {
                 var userProfile = _service.GetUserProfileModelByUserName(userName);
+                var user = await _userManager.FindByNameAsync(userName);
+
                 if (userProfile == default)
                     return Ok(new UserProfileModel());
 
                 return Ok(new
                 {
+                    user.UserName,
+                    user.FullName,
                     userProfile.City,
                     userProfile.Hobby,
                     userProfile.Work,
@@ -63,7 +67,7 @@ namespace SocialNetwork_Web.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest();
+                return BadRequest(new { message = ex.Message });
             }
         }
 
