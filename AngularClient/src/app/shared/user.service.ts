@@ -55,6 +55,7 @@ export class UserService {
     return this.http.get(this.BaseURI + "/User/" + userName + "/statistic");
   }
 
+
   roleMatch(allowedRoles: any[]): boolean {
     var isMatch = false;
     var token = localStorage.getItem('token')?.toString();

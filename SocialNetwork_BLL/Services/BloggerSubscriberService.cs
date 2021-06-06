@@ -30,6 +30,9 @@ namespace SocialNetwork_BLL.Services
             if (model == default || model.BloggerUserName == default || model.SubscriberUserName == default)
                 throw new SocialNetworkException("Incorrect value model");
 
+            if (Database.BloggerSubscriberRepository.IsFriends(model.SubscriberUserName, model.BloggerUserName))
+                throw new SocialNetworkException("This element already exist in Database");
+
             var blogger = await _userManager.FindByNameAsync(model.BloggerUserName);
             var subscriber = await _userManager.FindByNameAsync(model.SubscriberUserName);
 
@@ -77,6 +80,16 @@ namespace SocialNetwork_BLL.Services
                                     .AsEnumerable();
 
             return following;
+        }
+
+        public bool IsFriend(string bloggerUserName, string subscriberUserName)
+        {
+            if (bloggerUserName == default || subscriberUserName == default)
+                throw new SocialNetworkException("Incorrect value model");
+            if (subscriberUserName == bloggerUserName)
+                return true;
+
+            return Database.BloggerSubscriberRepository.IsFriends(bloggerUserName, subscriberUserName);
         }
     }
 }

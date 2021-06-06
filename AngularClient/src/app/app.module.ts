@@ -20,6 +20,8 @@ import { ShowPostComponent } from './show-post/show-post.component';
 import { AddPostComponent } from './add-post/add-post.component';
 import { PostService } from './shared/post.service';
 import { UserProfileComponent } from './user/user-profile/user-profile.component';
+import { SubscribeService } from './shared/subscribe.service';
+import { ListUsersComponent } from './user/list-users/list-users.component'
 
 
 @NgModule({
@@ -33,7 +35,8 @@ import { UserProfileComponent } from './user/user-profile/user-profile.component
     ForbiddenComponent,
     ShowPostComponent,
     AddPostComponent,
-    UserProfileComponent
+    UserProfileComponent,
+    ListUsersComponent
   ],
   imports: [
     BrowserModule,
@@ -46,7 +49,7 @@ import { UserProfileComponent } from './user/user-profile/user-profile.component
     }),
     FormsModule
   ],
-  providers: [UserService, PostService,
+  providers: [UserService, PostService, SubscribeService,
   {
     provide: HTTP_INTERCEPTORS,
     useClass: AuthInterceptor,

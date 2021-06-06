@@ -1,9 +1,11 @@
 <div class="page-heading">
     <div class="media clearfix">
         <div class="media-left pr30">
-            <a href="#">
+            <!-- <img class="media-object mw150" src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="..."> -->
+            <div class="imgBlock">
                 <img class="media-object mw150" src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="...">
-            </a>
+            </div>
+
         </div>
         <div class="media-body va-m">
             <h2 class="media-heading">{{userDetails?.userName}} </h2>
@@ -21,19 +23,30 @@
     </div><br>
 
     <div class="row divider text-center">
+
         <div class="col-xs-12 col-sm-4 emphasis">
-            <h2><strong>{{pageStatistic?.postsCount}}</strong></h2>
-            <p>Posts</p>
+            <button class="btn btn-light" disabled=true>
+                <h2><strong>{{pageStatistic?.postsCount}}</strong></h2>
+                <p>Posts</p>
+            </button><br>
             <button class="btn btn-info btn-block"><span class="fa fa-user"></span> Edit profile</button>
         </div>
         <div class="col-xs-12 col-sm-4 emphasis">
-            <h2><strong> {{pageStatistic?.followersCount}} </strong></h2>
-            <p>Followers</p>
-            <button class="btn btn-success btn-block"><span class="fa fa-plus-circle"></span> Follow  </button>
+            <button type="button" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#listFollowers">
+                <h2><strong> {{pageStatistic?.followersCount}} </strong></h2>
+                <p>Followers</p>
+            </button><br>
+
+            <app-list-users></app-list-users>
+
+            <button (click)="onFollow()" class="btn btn-success btn-block" *ngIf="!isFriends"><span class="fa fa-plus-circle"></span> Follow  </button>
+            <button (click)="onUnsubscribe" class="btn btn-success btn-danger" *ngIf="isFriends && !isOnMyPage" [disabled]="isOnMyPage"><span class="fa fa-plus-circle"></span> Unsubscribe  </button>
         </div>
         <div class="col-xs-12 col-sm-4 emphasis">
-            <h2><strong>{{pageStatistic?.followingCount}}</strong></h2>
-            <p>Following</p>
+            <button class="btn btn-light" data-bs-toggle="modal" data-bs-target="#listFollowing">
+                <h2><strong>{{pageStatistic?.followingCount}}</strong></h2>
+                <p>Following</p>
+            </button><br>
             <button class="btn btn-success btn-block"><span class="fa fa-comment"></span> Message</button>
         </div>
     </div>

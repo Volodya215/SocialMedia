@@ -9,5 +9,6 @@ namespace SocialNetwork_DAL.Interfaces
     public interface IBloggerSubscriberRepository : IRepository<BloggerSubscriber>
     {
         IQueryable<BloggerSubscriber> FindAllWithDetails();
+        bool IsFriends(string bloggerUserName, string subscriberUserName);
     }
 }

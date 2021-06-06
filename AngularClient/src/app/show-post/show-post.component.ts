@@ -20,7 +20,7 @@ export class ShowPostComponent implements OnInit {
     });
   }
 
-  getAllPost(){
+  getAllPost() {
     this.userName = localStorage.getItem('currentUser');
   	this.service.getAllPost(this.userName).subscribe((result: any) => {
   		console.log('result is ', result);

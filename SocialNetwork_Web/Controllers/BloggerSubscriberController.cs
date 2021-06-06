@@ -38,9 +38,9 @@ namespace SocialNetwork_Web.Controllers
             }
         }
 
-        [HttpGet("followers")]
+        [HttpGet("{userName}/followers")]
         // [Authorize(Roles = "Customer")]
-        // GET: /api/BloggerSubscriber/followers
+        // GET: /api/BloggerSubscriber/Volodya/followers
         public ActionResult<IEnumerable<string>> GetUserFollowers(string userName)
         {
             if (userName == default)
@@ -59,9 +59,9 @@ namespace SocialNetwork_Web.Controllers
             }
         }
 
-        [HttpGet("following")]
+        [HttpGet("{userName}/following")]
         // [Authorize(Roles = "Customer")]
-        // GET: /api/BloggerSubscriber/following
+        // GET: /api/BloggerSubscriber/Volodya/following
         public ActionResult<IEnumerable<string>> GetUserFollowing(string userName)
         {
             if (userName == default)
@@ -73,6 +73,25 @@ namespace SocialNetwork_Web.Controllers
                     return NotFound();
 
                 return Ok(followers);
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
+        }
+
+        [HttpGet("isFriends/{bloggerUserName}/{subscriberUserName}")]
+        // [Authorize(Roles = "Customer")]
+        // GET: /api/BloggerSubscriber/isFriend/bloggerUserName/subscriberUserName
+        public ActionResult<bool> IsFriends(string bloggerUserName, string subscriberUserName)
+        {
+            if (bloggerUserName == default || subscriberUserName == default)
+                return BadRequest();
+            try
+            {
+                var isFriend = _service.IsFriend(bloggerUserName, subscriberUserName);
+
+                return Ok(isFriend);
             }
             catch (Exception)
             {

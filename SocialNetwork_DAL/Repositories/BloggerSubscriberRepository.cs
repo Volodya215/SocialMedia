@@ -20,6 +20,11 @@ namespace SocialNetwork_DAL.Repositories
             return _entities.Include(x => x.Blogger).Include(x => x.Subscriber);
         }
 
+        public bool IsFriends(string bloggerUserName, string subscriberUserName)
+        {
+            return _entities.Any(x => x.Blogger.UserName == bloggerUserName && x.Subscriber.UserName == subscriberUserName);
+        }
+
 
         public SocialNetworkContext DbContext
         {

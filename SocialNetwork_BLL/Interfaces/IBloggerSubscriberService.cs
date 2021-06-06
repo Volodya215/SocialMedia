@@ -14,5 +14,7 @@ namespace SocialNetwork_BLL.Interfaces
 
         IEnumerable<string> GetAllFollowersByUserName(string userName);
         IEnumerable<string> GetAllFollowingByUserName(string userName);
+
+        bool IsFriend(string bloggerUserName, string subscriberUserName);
     }
 }

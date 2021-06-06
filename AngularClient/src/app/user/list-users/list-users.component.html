@@ -1,0 +1,67 @@
+<div class="modal fade" id="listFollowers" tabindex="-1" role="dialog" aria-labelledby="listFollowersLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="listFollowersLabel">Followers</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+            </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <table class="table table-bordered tablesorter" id="tblData">
+                            <thead>
+                                <tr class="success">
+                                    <td>Username</td>
+                                    <td>Link</td>
+                                </tr>
+                                <tr *ngFor="let user of usersFollowers">
+                                    <td>{{user}}</td>
+                                    <td><input class="btn btn-success" type="button" value="Show profile" onclick="showUser()" /></td>
+                                </tr>
+                            </thead>
+                            <tbody id="tblBody"></tbody>
+                        </table>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" #closeBtn class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="listFollowing" tabindex="-1" role="dialog" aria-labelledby="listFollowingLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="listFollowingLabel">Following</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+            </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <table class="table table-bordered tablesorter" id="tblData">
+                            <thead>
+                                <tr class="success">
+                                    <td>Username</td>
+                                    <td>Link</td>
+                                </tr>
+                                <tr *ngFor="let user of usersFollowing">
+                                    <td>{{user}}</td>
+                                    <td><input class="btn btn-success" type="button" value="Show profile" onclick="showUser()" /></td>
+                                </tr>
+                            </thead>
+                            <tbody id="tblBody"></tbody>
+                        </table>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" #closeBtn class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
