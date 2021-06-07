@@ -8,16 +8,20 @@
             </div>
             <div class="modal-body">
                 <form>
+                    <div class="input-group" id="filterAll">
+                        <div class="input-group-addon"><i class="glyphicon glyphicon-search"></i></div>
+                        <input type="text" class="form-control" name="searchString" placeholder="Search..." [(ngModel)]="searchString" name="searchStr">
+                    </div><br>
                     <div class="form-group">
-                        <table class="table table-bordered tablesorter" id="tblData">
+                        <table class="table table-bordered tablesorter" id="tblFollowers">
                             <thead>
                                 <tr class="success">
                                     <td>Username</td>
                                     <td>Link</td>
                                 </tr>
-                                <tr *ngFor="let user of usersFollowers">
+                                <tr *ngFor="let user of usersFollowers | filterAll: searchString">
                                     <td>{{user}}</td>
-                                    <td><input class="btn btn-success" type="button" value="Show profile" onclick="showUser()" /></td>
+                                    <td><input class="btn btn-success" type="button" value="Show profile" (click)="showUser(user)" /></td>
                                 </tr>
                             </thead>
                             <tbody id="tblBody"></tbody>
@@ -26,7 +30,7 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" #closeBtn class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" #closeBtnFollower class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
             </div>
         </div>
     </div>
@@ -42,16 +46,20 @@
             </div>
             <div class="modal-body">
                 <form>
+                    <div class="input-group" id="filterAll">
+                        <div class="input-group-addon"><i class="glyphicon glyphicon-search"></i></div>
+                        <input type="text" class="form-control" name="searchString" placeholder="Search..." [(ngModel)]="searchString" name="searchStr">
+                    </div><br>
                     <div class="form-group">
-                        <table class="table table-bordered tablesorter" id="tblData">
+                        <table class="table table-bordered tablesorter" id="tblFollowing">
                             <thead>
                                 <tr class="success">
                                     <td>Username</td>
                                     <td>Link</td>
                                 </tr>
-                                <tr *ngFor="let user of usersFollowing">
+                                <tr *ngFor="let user of usersFollowing  | filterAll: searchString">
                                     <td>{{user}}</td>
-                                    <td><input class="btn btn-success" type="button" value="Show profile" onclick="showUser()" /></td>
+                                    <td><input class="btn btn-success" type="button" value="Show profile" (click)="showUser(user)" /></td>
                                 </tr>
                             </thead>
                             <tbody id="tblBody"></tbody>
@@ -60,7 +68,7 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" #closeBtn class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" #closeBtnFollowing class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
             </div>
         </div>
     </div>

@@ -40,7 +40,7 @@
             <app-list-users></app-list-users>
 
             <button (click)="onFollow()" class="btn btn-success btn-block" *ngIf="!isFriends"><span class="fa fa-plus-circle"></span> Follow  </button>
-            <button (click)="onUnsubscribe" class="btn btn-success btn-danger" *ngIf="isFriends && !isOnMyPage" [disabled]="isOnMyPage"><span class="fa fa-plus-circle"></span> Unsubscribe  </button>
+            <button (click)="onUnsubscribe()" class="btn btn-success btn-danger" *ngIf="isFriends && !isOnMyPage" [disabled]="isOnMyPage"><span class="fa fa-plus-circle"></span> Unsubscribe  </button>
         </div>
         <div class="col-xs-12 col-sm-4 emphasis">
             <button class="btn btn-light" data-bs-toggle="modal" data-bs-target="#listFollowing">

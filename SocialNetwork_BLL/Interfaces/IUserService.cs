@@ -14,5 +14,7 @@ namespace SocialNetwork_BLL.Interfaces
         Task<string> LoginUser(LoginModel loginModel, string JWT_secret);
 
         Task<PageStatistic> GetUserPageStatisticByUserName(string userName);
+
+        Task<IEnumerable<string>> GetAllUser();
     }
 }

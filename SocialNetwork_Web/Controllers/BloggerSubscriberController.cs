@@ -99,17 +99,17 @@ namespace SocialNetwork_Web.Controllers
             }
         }
 
-        [HttpDelete]
+        [HttpDelete("{bloggerUserName}/{subscriberUserName}")]
         // [Authorize(Roles = "Customer")]
         // DELETE: /api/BloggerSubscriber
-        public async Task<ActionResult> DeleteBlogSubsc(BloggerSubscriberModel model)
+        public async Task<ActionResult> DeleteBlogSubsc(string bloggerUserName, string subscriberUserName)
         {
-            if (model == default || model.BloggerUserName == default || model.SubscriberUserName == default)
+            if (bloggerUserName == default || subscriberUserName == default)
                 return BadRequest();
 
             try
             {
-                await _service.DeleteAsync(model);
+                await _service.DeleteAsync(bloggerUserName, subscriberUserName);
                 return Ok();
             }
             catch (Exception ex)

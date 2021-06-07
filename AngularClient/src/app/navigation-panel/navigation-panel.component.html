@@ -1,0 +1,64 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/src/app/home/home.component.html">Social Network</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a (click)="toHome()" class="nav-link active" aria-current="page" href="/home">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Profile</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Messages</a>
+                </li>
+            </ul>
+            <form class="d-flex">
+                <input class="form-control me-2" type="search" id="mySearch" placeholder="Search..." aria-label="Search" [(ngModel)]="searchString" name="searchStri">
+                <button class="btn btn-outline-success" (click)="getAllUser()" type="submit" data-bs-toggle="modal" data-bs-target="#listAllUser">Search</button>
+            </form>
+        </div>
+    </div>
+    <button class="btn btn-danger my-2 my-sm-0" (click)="onLogout()">Logout</button>
+</nav>
+
+<div class="modal fade" id="listAllUser" tabindex="-1" role="dialog" aria-labelledby="listAllUserLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="listAllUserLabel">Users</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+            </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="input-group" id="filterAll">
+                        <div class="input-group-addon"><i class="glyphicon glyphicon-search"></i></div>
+                        <input type="text" class="form-control" name="searchString" placeholder="Search..." [(ngModel)]="searchString" name="searchStr">
+                    </div><br>
+                    <div class="form-group">
+                        <table class="table table-bordered tablesorter" id="tblFollowing">
+                            <thead>
+                                <tr class="success">
+                                    <td>Username</td>
+                                    <td>Link</td>
+                                </tr>
+                                <tr *ngFor="let user of allUsers  | filterAll: searchString">
+                                    <td>{{user}}</td>
+                                    <td><input class="btn btn-success" type="button" value="Show profile" (click)="showUser(user)" /></td>
+                                </tr>
+                            </thead>
+                            <tbody id="tblBody"></tbody>
+                        </table>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" #closeBtn class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -30,7 +30,7 @@ namespace SocialNetwork_BLL.Services
             if (model == default || model.BloggerUserName == default || model.SubscriberUserName == default)
                 throw new SocialNetworkException("Incorrect value model");
 
-            if (Database.BloggerSubscriberRepository.IsFriends(model.SubscriberUserName, model.BloggerUserName))
+            if (Database.BloggerSubscriberRepository.IsFriends(model.BloggerUserName, model.SubscriberUserName))
                 throw new SocialNetworkException("This element already exist in Database");
 
             var blogger = await _userManager.FindByNameAsync(model.BloggerUserName);
@@ -43,13 +43,13 @@ namespace SocialNetwork_BLL.Services
             });
         }
 
-        public async Task DeleteAsync(BloggerSubscriberModel model)
+        public async Task DeleteAsync(string bloggerUserName, string subscriberUserName)
         {
-            if (model == default || model.BloggerUserName == default || model.SubscriberUserName == default)
+            if (bloggerUserName == default || subscriberUserName == default)
                 throw new SocialNetworkException("Incorrect value model");
 
             var blogSubsc = Database.BloggerSubscriberRepository.FindAllWithDetails()
-                                    .Where(x => x.Blogger.UserName == model.BloggerUserName && x.Subscriber.UserName == model.SubscriberUserName)
+                                    .Where(x => x.Blogger.UserName == bloggerUserName && x.Subscriber.UserName == subscriberUserName)
                                     .FirstOrDefault();
             if (blogSubsc == null)
                 throw new SocialNetworkException("Data doesn't exist");

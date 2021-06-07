@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
@@ -106,6 +107,23 @@ namespace SocialNetwork_Web.Controllers
                     return Ok(new PageStatistic());
 
                 return Ok(pageStatistic);
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
+        }
+
+        [HttpGet("allUsers")]
+        [Authorize(Roles = "Admin, Customer")]
+        // GET: /api/User/allUsers
+        public async Task<ActionResult<IEnumerable<string>>> GetAllUsers()
+        {
+            try
+            {
+                var users = await _service.GetAllUser();
+
+                return Ok(users);
             }
             catch (Exception)
             {

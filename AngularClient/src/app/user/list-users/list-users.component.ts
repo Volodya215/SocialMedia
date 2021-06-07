@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
 import { SubscribeService } from 'src/app/shared/subscribe.service';
 
 @Component({
@@ -10,12 +11,20 @@ export class ListUsersComponent implements OnInit {
   usersFollowers: any[] = [];
   usersFollowing: any[] = [];
   userName: any;
+  @ViewChild('closeBtnFollowing') closeBtnFollowing: ElementRef | undefined;
+  @ViewChild('closeBtnFollower') closeBtnFollower: ElementRef | undefined;
+  public searchString!: string;
 
-  constructor(private service: SubscribeService) { }
+  constructor(private service: SubscribeService, private router: Router) { }
 
   ngOnInit(): void {
     this.getAllFollowers();
     this.getAllFollowing();
+
+    this.service.subscribeAdded_Observable.subscribe(res => {
+      this.getAllFollowers();
+      this.getAllFollowing();
+    });
   }
 
   getAllFollowers() {
@@ -34,8 +43,11 @@ export class ListUsersComponent implements OnInit {
   	});
   }
 
-  showUser() {
-
+  showUser(userName: string) {
+    localStorage.setItem('currentUser', userName);
+    this.closeBtnFollowing?.nativeElement.click();
+    this.closeBtnFollower?.nativeElement.click();
+    this.router.navigateByUrl('/guest');
   }
   
 }

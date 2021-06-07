@@ -21,7 +21,7 @@ export class SubscribeService {
 	}
 
 	unsubscribe(bloggerUserName: string, subscriberUserName: string) {
-		return this.http.delete(this.BaseURI + '/BloggerSubscriber' + bloggerUserName + '/' + subscriberUserName);
+		return this.http.delete(this.BaseURI + '/BloggerSubscriber/' + bloggerUserName + '/' + subscriberUserName);
 	}
 
 	getAllFollowers(userName: string) {
@@ -31,6 +31,10 @@ export class SubscribeService {
 	getAllFollowing(userName: string) {
 		return this.http.get(this.BaseURI + '/BloggerSubscriber/' + userName + '/following');
 	}
+
+	notifySubscribeAddition(){
+        this.subscribeAdded_Observable.next();
+    }
 
 }
 

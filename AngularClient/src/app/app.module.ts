@@ -21,7 +21,10 @@ import { AddPostComponent } from './add-post/add-post.component';
 import { PostService } from './shared/post.service';
 import { UserProfileComponent } from './user/user-profile/user-profile.component';
 import { SubscribeService } from './shared/subscribe.service';
-import { ListUsersComponent } from './user/list-users/list-users.component'
+import { ListUsersComponent } from './user/list-users/list-users.component';
+import { GuestUserComponent } from './user/guest-user/guest-user.component';
+import { NavigationPanelComponent } from './navigation-panel/navigation-panel.component'
+import { FilterPipe } from './table.pipe';
 
 
 @NgModule({
@@ -36,7 +39,10 @@ import { ListUsersComponent } from './user/list-users/list-users.component'
     ShowPostComponent,
     AddPostComponent,
     UserProfileComponent,
-    ListUsersComponent
+    ListUsersComponent,
+    GuestUserComponent,
+    NavigationPanelComponent,
+    FilterPipe
   ],
   imports: [
     BrowserModule,

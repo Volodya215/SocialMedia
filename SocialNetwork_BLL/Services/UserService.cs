@@ -95,5 +95,12 @@ namespace SocialNetwork_BLL.Services
 
             return statistic;
         }
+
+        public async Task<IEnumerable<string>> GetAllUser()
+        {
+            var users = await _userManager.GetUsersInRoleAsync("Customer");
+
+            return users.Select(x => x.UserName);
+        }
     }
 }

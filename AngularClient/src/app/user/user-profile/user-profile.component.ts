@@ -68,6 +68,7 @@ export class UserProfileComponent implements OnInit {
       res => {
         this.getPageStatistic();
         this.isFriends = true;
+        this.subscribeService.notifySubscribeAddition();
       },
       err => {
         console.log(err);
@@ -80,6 +81,7 @@ export class UserProfileComponent implements OnInit {
       res => {
         this.getPageStatistic();
         this.isFriends = false;
+        this.subscribeService.notifySubscribeAddition();
       },
       err => {
         console.log(err);

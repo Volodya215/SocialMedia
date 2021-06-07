@@ -10,7 +10,7 @@ namespace SocialNetwork_BLL.Interfaces
     {
         Task AddAsync(BloggerSubscriberModel model);
 
-        Task DeleteAsync(BloggerSubscriberModel model);
+        Task DeleteAsync(string bloggerUserName, string subscriberUserName);
 
         IEnumerable<string> GetAllFollowersByUserName(string userName);
         IEnumerable<string> GetAllFollowingByUserName(string userName);
