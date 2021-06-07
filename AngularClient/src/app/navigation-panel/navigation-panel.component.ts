@@ -1,5 +1,6 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
+import { SubscribeService } from '../shared/subscribe.service';
 import { UserService } from '../shared/user.service';
 
 @Component({
@@ -13,7 +14,7 @@ export class NavigationPanelComponent implements OnInit {
   allUsers: any[] = [];
   public searchString!: string;
 
-  constructor(private router: Router, private service: UserService) { }
+  constructor(private router: Router, private userService: UserService, private subscribeService: SubscribeService) { }
 
   ngOnInit(): void {
   }
@@ -30,7 +31,7 @@ export class NavigationPanelComponent implements OnInit {
   }
 
   getAllUser() {
-    this.service.getAllUser().subscribe(
+    this.userService.getAllUser().subscribe(
       (result: any) => {
         console.log('result is ', result);
   		  this.allUsers = result;
@@ -43,7 +44,14 @@ export class NavigationPanelComponent implements OnInit {
 
   showUser(userName: string) {
     localStorage.setItem('currentUser', userName);
+
     this.closeBtn?.nativeElement.click();
+    if(localStorage.getItem('currentUser') === localStorage.getItem('registerUser')) {
+      this.router.navigateByUrl('/home');
+      return;
+    }
+
     this.router.navigateByUrl('/guest');
+    this.subscribeService.notifyGuestPageChange();
   }
 }

@@ -9,6 +9,7 @@ export class SubscribeService {
 	}
     readonly BaseURI = 'http://localhost:7609/api';
     public subscribeAdded_Observable = new Subject();
+	public guestPageChanged_Observable = new Subject();
 
 	public isShowFollowers: boolean = true;
 
@@ -36,6 +37,9 @@ export class SubscribeService {
         this.subscribeAdded_Observable.next();
     }
 
+	notifyGuestPageChange(){
+        this.guestPageChanged_Observable.next();
+    }
 }
 
 export class Subscribe {

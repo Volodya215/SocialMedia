@@ -29,7 +29,7 @@
                 <h2><strong>{{pageStatistic?.postsCount}}</strong></h2>
                 <p>Posts</p>
             </button><br>
-            <button class="btn btn-info btn-block"><span class="fa fa-user"></span> Edit profile</button>
+            <button (click)="onEditProfile()" class="btn btn-info btn-block" *ngIf="isOnMyPage"><span class="fa fa-user"></span> Edit profile</button>
         </div>
         <div class="col-xs-12 col-sm-4 emphasis">
             <button type="button" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#listFollowers">

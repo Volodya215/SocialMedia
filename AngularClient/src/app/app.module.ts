@@ -25,6 +25,7 @@ import { ListUsersComponent } from './user/list-users/list-users.component';
 import { GuestUserComponent } from './user/guest-user/guest-user.component';
 import { NavigationPanelComponent } from './navigation-panel/navigation-panel.component'
 import { FilterPipe } from './table.pipe';
+import { EditProfileComponent } from './user/edit-profile/edit-profile.component';
 
 
 @NgModule({
@@ -42,7 +43,8 @@ import { FilterPipe } from './table.pipe';
     ListUsersComponent,
     GuestUserComponent,
     NavigationPanelComponent,
-    FilterPipe
+    FilterPipe,
+    EditProfileComponent
   ],
   imports: [
     BrowserModule,

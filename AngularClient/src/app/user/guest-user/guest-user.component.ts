@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { SubscribeService } from 'src/app/shared/subscribe.service';
+
 
 @Component({
   selector: 'app-guest-user',
@@ -8,8 +9,12 @@ import { Router } from '@angular/router';
 })
 export class GuestUserComponent implements OnInit {
 
-  constructor(private router: Router) { }
+  constructor(private service: SubscribeService) {
+   }
 
   ngOnInit(): void {
+    this.service.guestPageChanged_Observable.subscribe(res => {
+      window.location.reload();
+    });
   }
 }

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { PostService } from 'src/app/shared/post.service';
 import { Subscribe, SubscribeService } from 'src/app/shared/subscribe.service';
 import { UserService } from 'src/app/shared/user.service';
@@ -16,7 +17,7 @@ export class UserProfileComponent implements OnInit {
   isFriends: boolean = true;
   isOnMyPage: boolean = true;
 
-  constructor(private userService: UserService, private subscribeService: SubscribeService, private postService: PostService) { }
+  constructor(private userService: UserService, private subscribeService: SubscribeService, private postService: PostService, private router: Router) { }
 
   ngOnInit(): void {
     this.currentUserName = localStorage.getItem('currentUser');
@@ -88,6 +89,10 @@ export class UserProfileComponent implements OnInit {
       },
     );
 
+  }
+
+  onEditProfile() {
+    this.router.navigateByUrl('/editProfile');
   }
 
 }
