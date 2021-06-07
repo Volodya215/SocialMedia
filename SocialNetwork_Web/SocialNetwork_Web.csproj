@@ -18,5 +18,10 @@
     <ProjectReference Include="..\SocialNetwork_DAL\SocialNetwork_DAL.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Image\" />
+    <Folder Include="wwwroot\images\" />
+  </ItemGroup>
+
 
 </Project>

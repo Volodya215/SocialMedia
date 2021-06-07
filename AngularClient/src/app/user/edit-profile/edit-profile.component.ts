@@ -10,6 +10,7 @@ import { UploadImageService } from 'src/app/shared/upload-image.service';
 export class EditProfileComponent implements OnInit {
   imageUrl: string = "https://bootdey.com/img/Content/avatar/avatar7.png";
   fileToUpload: any;
+  userName: any;
 
   constructor(private imageService : UploadImageService) { }
 
@@ -29,12 +30,13 @@ export class EditProfileComponent implements OnInit {
   }
 
   OnSubmit(Caption: any, Image: any){
-   this.imageService.postFile(Caption.value,this.fileToUpload).subscribe(
+    this.userName = localStorage.getItem('registerUser');
+   this.imageService.postFile(Caption.value, this.fileToUpload, this.userName).subscribe(
      data =>{
        console.log('done');
        Caption.value = null;
        Image.value = null;
-       this.imageUrl = "/assets/img/default-image.png";
+       this.imageUrl = "https://bootdey.com/img/Content/avatar/avatar7.png";
      }
    );
   }

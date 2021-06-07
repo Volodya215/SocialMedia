@@ -7,8 +7,8 @@ export class UploadImageService {
 
   constructor(private http : HttpClient) { }
 
-  postFile(caption: string, fileToUpload: File) {
-    const endpoint = this.BaseURI + '/UploadImage';
+  postFile(caption: string, fileToUpload: File, userName: string) {
+    const endpoint = this.BaseURI + '/Image/UploadImage/' + userName;
     const formData: FormData = new FormData();
     formData.append('Image', fileToUpload, fileToUpload.name);
     formData.append('ImageCaption', caption);
