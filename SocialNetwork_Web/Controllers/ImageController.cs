@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.StaticFiles;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -13,6 +15,13 @@ namespace SocialNetwork_Web.Controllers
     [ApiController]
     public class ImageController : ControllerBase
     {
+        private IHostingEnvironment _hostingEnvironment;
+
+        public ImageController(IHostingEnvironment environment)
+        {
+            _hostingEnvironment = environment;
+        }
+
         [HttpPost("UploadImage/{userName}")]
         [Authorize(Roles = "Customer")]
         // POST: /api/Image/UploadImage/{userName}
@@ -24,7 +33,7 @@ namespace SocialNetwork_Web.Controllers
                 var httpRequest = HttpContext.Request;
                 // Upload image
                 var postedFile = httpRequest.Form.Files["Image"];
-                imageName = userName + Path.GetExtension(postedFile.FileName);
+                imageName = userName + ".png" /*Path.GetExtension(postedFile.FileName)*/;
 
                 var filePath = Path.Combine(Directory.GetCurrentDirectory(), @"wwwroot\images", imageName);
                 using (var fileStream = new FileStream(filePath, FileMode.Create))
@@ -38,6 +47,47 @@ namespace SocialNetwork_Web.Controllers
                 return BadRequest();
             }
 
+        }
+
+        [HttpGet("GetImage/{userName}")]
+       // [Authorize(Roles = "Customer")]
+        // POST: /api/Image/GetImage/{userName}
+        public async Task<IActionResult> GetImage(string userName)
+        {
+            try
+            {
+                userName += ".png";
+                var uploads = Path.Combine(_hostingEnvironment.WebRootPath, "images");
+                var filePath = Path.Combine(uploads, userName);
+                if (!System.IO.File.Exists(filePath))
+                    return NotFound();
+
+                var memory = new MemoryStream();
+                using (var stream = new FileStream(filePath, FileMode.Open))
+                {
+                    await stream.CopyToAsync(memory);
+                }
+                memory.Position = 0;
+
+                return File(memory, GetContentType(filePath), userName);
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
+
+        }
+
+
+        private string GetContentType(string path)
+        {
+            var provider = new FileExtensionContentTypeProvider();
+            string contentType;
+            if (!provider.TryGetContentType(path, out contentType))
+            {
+                contentType = "application/octet-stream";
+            }
+            return contentType;
         }
     }
 }

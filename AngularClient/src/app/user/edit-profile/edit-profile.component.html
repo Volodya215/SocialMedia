@@ -1,29 +1,29 @@
 <app-navigation-panel></app-navigation-panel>
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/css/materialize.min.css">
-<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-<div class="container">
+<section id="content" class="container">
+
     <div class="row">
-        <div class="col s8 offset-2">
-            <div class="card-panel teal lighten-2">
-                <h4 class="center white-text">Image Library</h4>
-            </div>
-            <form #imageForm=ngForm (ngSubmit)="OnSubmit(Caption,Image)">
+        <div class="col-md-4">
+
+            <form #imageForm=ngForm (ngSubmit)="OnSubmit(Image)">
                 <div class="row">
-                    <div class="input-field col s12">
-                        <input type="text" #Caption ngModel name="Caption" id="Caption" required>
-                        <label for="Caption">Caption</label>
-                    </div>
+                    <h3 class="py-2">User profile</h3>
+
                 </div>
-                <img [src]="imageUrl" style="width:300px;height:300px">
-                <input type="file" #Image accept="image/*" (change)="handleFileInput($event.target)">
-                <button type="submit" class="btn-large btn-submit" [disabled]="Image.value=='' || !imageForm.valid">Submit</button>
+                <div>
+                    <img [src]="imageUrl" class="py-2" style="width:300px;height:300px" alt="Place image title"><br>
+                    <input type="file" #Image accept="image/*" (change)="handleFileInput($event.target)">
+                    <button type="submit" class="btn-large btn-submit" [disabled]="Image.value==''">Submit</button>
+                </div>
+
             </form>
+
+        </div>
+        <div class="col-md-1"></div>
+        <div class="col-md-7">
+            <app-show-post></app-show-post>
+
+
         </div>
     </div>
-</div>
-
-
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js"></script>
+</section>

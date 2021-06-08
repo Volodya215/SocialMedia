@@ -26,6 +26,7 @@ import { GuestUserComponent } from './user/guest-user/guest-user.component';
 import { NavigationPanelComponent } from './navigation-panel/navigation-panel.component'
 import { FilterPipe } from './table.pipe';
 import { EditProfileComponent } from './user/edit-profile/edit-profile.component';
+import { UploadImageService } from './shared/upload-image.service';
 
 
 @NgModule({
@@ -57,7 +58,7 @@ import { EditProfileComponent } from './user/edit-profile/edit-profile.component
     }),
     FormsModule
   ],
-  providers: [UserService, PostService, SubscribeService,
+  providers: [UserService, PostService, SubscribeService, UploadImageService,
   {
     provide: HTTP_INTERCEPTORS,
     useClass: AuthInterceptor,

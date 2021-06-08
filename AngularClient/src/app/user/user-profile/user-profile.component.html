@@ -3,9 +3,11 @@
         <div class="media-left pr30">
             <!-- <img class="media-object mw150" src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="..."> -->
             <div class="imgBlock">
-                <img class="media-object mw150" src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="...">
+                <img class="media-object mw150 imgSize" [src]="imageUrl" alt="Place image title" *ngIf="isImageLoading; else noImageFound">
             </div>
-
+            <ng-template #noImageFound>
+                <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Fallbackimage">
+            </ng-template>
         </div>
         <div class="media-body va-m">
             <h2 class="media-heading">{{userDetails?.userName}} </h2>

@@ -1,7 +1,9 @@
+import { HttpEventType } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { PostService } from 'src/app/shared/post.service';
 import { Subscribe, SubscribeService } from 'src/app/shared/subscribe.service';
+import { UploadImageService } from 'src/app/shared/upload-image.service';
 import { UserService } from 'src/app/shared/user.service';
 
 @Component({
@@ -16,8 +18,11 @@ export class UserProfileComponent implements OnInit {
   registerUserName: any;
   isFriends: boolean = true;
   isOnMyPage: boolean = true;
+  isImageLoading: boolean = false;
+  imageUrl: any;
 
-  constructor(private userService: UserService, private subscribeService: SubscribeService, private postService: PostService, private router: Router) { }
+  constructor(private userService: UserService, private subscribeService: SubscribeService, 
+    private postService: PostService, private router: Router, private imageService: UploadImageService) { }
 
   ngOnInit(): void {
     this.currentUserName = localStorage.getItem('currentUser');
@@ -47,6 +52,11 @@ export class UserProfileComponent implements OnInit {
     this.postService.postAdded_Observable.subscribe(res => {
       this.getPageStatistic();
     });
+
+    this.getImageFromService();
+    if(!this.isImageLoading) {
+      
+    }
   }
 
   getPageStatistic() {
@@ -94,5 +104,34 @@ export class UserProfileComponent implements OnInit {
   onEditProfile() {
     this.router.navigateByUrl('/editProfile');
   }
+
+  createImageFromBlob(image: Blob) {
+    let reader = new FileReader();
+    reader.addEventListener("load", () => {
+       this.imageUrl = reader.result;
+    }, false);
+
+    if (image) {
+       reader.readAsDataURL(image);
+    }
+}
+
+getImageFromService() {
+this.imageService.downloadFile(this.currentUserName).subscribe(data => {
+ switch (data.type) {
+   case HttpEventType.DownloadProgress:
+     break;
+     case HttpEventType.Response:
+       const downloadedFile = new Blob([data.body as BlobPart], { type: data.body?.type });
+       this.createImageFromBlob(downloadedFile);
+       this.isImageLoading = true;
+       break;
+}
+}, error => {
+ this.isImageLoading = false;
+ console.log(error);
+});
+}
+
 
 }

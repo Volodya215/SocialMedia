@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpEvent, HttpRequest } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 @Injectable()
 export class UploadImageService {
@@ -7,13 +8,22 @@ export class UploadImageService {
 
   constructor(private http : HttpClient) { }
 
-  postFile(caption: string, fileToUpload: File, userName: string) {
+  postFile(fileToUpload: File, userName: string) {
     const endpoint = this.BaseURI + '/Image/UploadImage/' + userName;
     const formData: FormData = new FormData();
     formData.append('Image', fileToUpload, fileToUpload.name);
-    formData.append('ImageCaption', caption);
     return this.http
       .post(endpoint, formData);
   }
 
+  downloadFile(userName: string) : Observable<HttpEvent<Blob>>{
+    return this.http.request(new HttpRequest(
+      'GET',
+      `${this.BaseURI}/Image/GetImage/${userName}`,
+      null,
+      {
+        reportProgress: true,
+        responseType: 'blob'
+      }));
+  }
 }
