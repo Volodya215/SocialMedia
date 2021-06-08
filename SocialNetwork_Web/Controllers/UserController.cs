@@ -24,36 +24,14 @@ namespace SocialNetwork_Web.Controllers
 
         private readonly ApplicationSettings _appSettings;
         private readonly IUserService _service;
+        private readonly UserManager<User> _userManager;
 
-        public UserController(IOptions<ApplicationSettings> appSettings, IUserService service)
+        public UserController(IOptions<ApplicationSettings> appSettings, IUserService service, UserManager<User> userManager)
         {
             _appSettings = appSettings.Value;
             _service = service;
+            _userManager = userManager;
         }
-
-        //[HttpPost]
-        //[Route("Register")]
-        ////POST : /api/ApplicationUser/Register
-        //public async Task<Object> PostUser(UserModel model)
-        //{
-        //    var user = new User()
-        //    {
-        //        UserName = model.UserName,
-        //        Email = model.Email,
-        //        FullName = model.FullName
-        //    };
-
-        //    try
-        //    {
-        //        var result = await _userManager.CreateAsync(user, model.Password);
-        //        await _userManager.AddToRoleAsync(user, model.Role);
-        //        return Ok(result);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return BadRequest(new { message = ex.Message });
-        //    }
-        //}
 
         [HttpPost]
         [Route("Register")]
@@ -131,37 +109,27 @@ namespace SocialNetwork_Web.Controllers
             }
         }
 
-        //[HttpPost]
-        //[Route("Login")]
-        ////POST : /api/ApplicationUser/Login
-        //public async Task<IActionResult> Login(LoginModel model)
-        //{
-        //    var user = await _userManager.FindByNameAsync(model.UserName);
+        [HttpPut("Update")]
+        [Authorize(Roles = "Customer")]
+        // PUT: /api/User/Update
+        public async Task<ActionResult> PutUser(UserModel userModel)
+        {
+            try
+            {
+                string userId = User.Claims.First(x => x.Type == "UserID").Value;
+                var user = await _userManager.FindByIdAsync(userId);
 
-        //    if (user != null && await _userManager.CheckPasswordAsync(user, model.Password))
-        //    {
-        //        // Get role assigned to the user
-        //        var role = await _userManager.GetRolesAsync(user);
-        //        IdentityOptions identityOptions = new IdentityOptions();
+                user.Email = userModel.Email;
+                user.FullName = userModel.FullName;
 
-        //        var tokenDescriptor = new SecurityTokenDescriptor
-        //        {
-        //            Subject = new ClaimsIdentity(new Claim[]
-        //            {
-        //                new Claim("UserID", user.Id.ToString()),
-        //                new Claim(identityOptions.ClaimsIdentity.RoleClaimType, role.FirstOrDefault())
-        //            }),
-        //            Expires = DateTime.UtcNow.AddDays(1),
-        //            SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_appSettings.JWT_Secret)), SecurityAlgorithms.HmacSha256Signature)
-        //        };
+                var result = await _userManager.UpdateAsync(user);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+        }
 
-        //        var tokenHandler = new JwtSecurityTokenHandler();
-        //        var securityToken = tokenHandler.CreateToken(tokenDescriptor);
-        //        var token = tokenHandler.WriteToken(securityToken);
-        //        return Ok(new { token });
-        //    }
-        //    else
-        //        return BadRequest(new { message = "Username or password is incorrect." });
-        //}
     }
 }

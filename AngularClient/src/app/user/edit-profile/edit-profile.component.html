@@ -1,28 +1,57 @@
 <app-navigation-panel></app-navigation-panel>
 
 <section id="content" class="container">
-
-    <div class="row">
+    <h3 class="text-center py-3">Setting up personal information</h3>
+    <div class="row my-3">
         <div class="col-md-4">
-
-            <form #imageForm=ngForm (ngSubmit)="OnSubmit(Image)">
-                <div class="row">
-                    <h3 class="py-2">User profile</h3>
-
+            <form #imageForm=ngForm (ngSubmit)="OnSubmitFoto(Image)">
+                <div class=" text-center">
+                    <img [src]="imageUrl" class="py-2" style="width:300px;height:300px" alt="Place image title" *ngIf="isImageLoading; else noImageFound"><br>
+                    <ng-template #noImageFound>
+                        <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Fallbackimage">
+                    </ng-template>
+                    <input type="file" class="form-control my-2" #Image accept="image/*" (change)="handleFileInput($event.target)">
+                    <button type="submit" class="btn btn-primary" [disabled]="Image.value==''">Submit</button>
                 </div>
-                <div>
-                    <img [src]="imageUrl" class="py-2" style="width:300px;height:300px" alt="Place image title"><br>
-                    <input type="file" #Image accept="image/*" (change)="handleFileInput($event.target)">
-                    <button type="submit" class="btn-large btn-submit" [disabled]="Image.value==''">Submit</button>
-                </div>
-
             </form>
-
         </div>
         <div class="col-md-1"></div>
         <div class="col-md-7">
-            <app-show-post></app-show-post>
-
+            <form [formGroup]="service.userData" autocomplete="off">
+                <div class="form-group">
+                    <label>Email</label>
+                    <input class="form-control" formControlName="Email" [value]="userDetails?.email">
+                    <label class="text-danger" *ngIf="service.userData.get('Email')?.touched && service.userData.get('Email')?.errors?.email">Invalid
+                    email address.</label>
+                </div><br>
+                <div class="form-group">
+                    <label>Full Name</label>
+                    <input class="form-control" formControlName="FullName" value={{userDetails?.fullName}}>
+                </div><br>
+            </form>
+            <form [formGroup]="service.userProfile" autocomplete="off"><br>
+                <div class="form-group">
+                    <label>Hobby</label>
+                    <input class="form-control" formControlName="Hobby" type="text" [value]="userDetails?.hobby">
+                </div><br>
+                <div class="form-group">
+                    <label>City</label>
+                    <input class="form-control" formControlName="City" type="text" [value]="userDetails?.city">
+                </div><br>
+                <div class="form-group">
+                    <label>Work</label>
+                    <input class="form-control" formControlName="Work" type="text" [value]="userDetails?.work">
+                </div><br>
+                <div class="form-group">
+                    <label>About</label>
+                    <input class="form-control" formControlName="About" type="text" [value]="userDetails?.about">
+                </div><br>
+            </form>
+            <div class="form-row  text-center">
+                <div class="form-group col-md-8 offset-md-2">
+                    <button type="submit" (click)="onSubmitChange()" class="btn btn-lg btn-block" [disabled]="!service.userData.valid">Save changes </button>
+                </div>
+            </div><br>
 
         </div>
     </div>

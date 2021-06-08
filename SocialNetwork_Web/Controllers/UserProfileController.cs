@@ -58,6 +58,7 @@ namespace SocialNetwork_Web.Controllers
                 return Ok(new
                 {
                     user.UserName,
+                    user.Email,
                     user.FullName,
                     userProfile.City,
                     userProfile.Hobby,
@@ -72,47 +73,25 @@ namespace SocialNetwork_Web.Controllers
         }
 
 
-       // [HttpGet("{userName}/followers")]
-       //// [Authorize(Roles = "Customer")]
-       // // GET: /api/UserProfile/Volodya/followers
-       // public ActionResult<IEnumerable<string>> GetUserFollowers(string userName)
-       // {
-       //     if (userName == default)
-       //         return BadRequest();
-       //     try
-       //     {
-       //         var followers = _service.GetListOfFollowersByUserName(userName);
-       //         if (followers == default)
-       //             return NotFound();
+        [HttpPut("Update")]
+        [Authorize(Roles = "Customer")]
+        // PUT: /api/UserProfile/Update
+        public async Task<ActionResult> PutUser(UserProfileModel userModel)
+        {
+            try
+            {
+                string userId = User.Claims.First(x => x.Type == "UserID").Value;
+                userModel.UserId = userId;
 
-       //         return Ok(followers);
-       //     }
-       //     catch (Exception)
-       //     {
-       //         return BadRequest();
-       //     }
-       // }
+                await _service.UpdateAsync(userModel);
 
-       // [HttpGet("{userName}/following")]
-       //// [Authorize(Roles = "Customer")]
-       // // GET: /api/UserProfile/Volodya/following
-       // public ActionResult<IEnumerable<string>> GetUserFollowing(string userName)
-       // {
-       //     if (userName == default)
-       //         return BadRequest();
-       //     try
-       //     {
-       //         var followers = _service.GetListOfFollowingByUserName(userName);
-       //         if (followers == default)
-       //             return NotFound();
-
-       //         return Ok(followers);
-       //     }
-       //     catch (Exception)
-       //     {
-       //         return BadRequest();
-       //     }
-       // }
+                return Ok("Changed");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+        }
 
     }
 }

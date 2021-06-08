@@ -8,9 +8,9 @@ namespace SocialNetwork_BLL.Models
     {
         public int Id { get; set; }
         public string UserId { get; set; }
-        public string City { get; set; } = "No information";
-        public string Work { get; set; } = "No information";
-        public string Hobby { get; set; } = "No information";
-        public string About { get; set; } = "No information";
+        public string City { get; set; }
+        public string Work { get; set; }
+        public string Hobby { get; set; } 
+        public string About { get; set; }
     }
 }

@@ -40,23 +40,30 @@ namespace SocialNetwork_BLL.Services
         {
             if (model == default)
                 throw new SocialNetworkException("UserProfile is equal null");
-            bool isNum = int.TryParse(model.UserId, out int num);
 
-            if (model.Id <= 0 || !isNum || num <= 0)
-                throw new SocialNetworkException("Unable to identify model, id entered incorrectly ");
+            var userProfile = Database.UserProfileRepository.FindAllWithDetails().FirstOrDefault(x => x.UserId == model.UserId);
+            if (userProfile == default)
+                return AddAsync(model);
+            else
+            {
+                userProfile.Hobby = model.Hobby;
+                userProfile.City = model.City;
+                userProfile.Work = model.Work;
+                userProfile.About = model.About;
+            }
 
-            var userProfile = _mapper.Map<UserProfile>(model);
             return Database.UserProfileRepository.Update(userProfile);
 
         }
 
         public Task AddAsync(UserProfileModel model)
         {
-            if (model == default)
-                throw new SocialNetworkException("UserProfile is equal null");
+            if (model == default || model.UserId == default)
+                throw new SocialNetworkException("UserProfile is equal null or userId entered incorrectly");
 
-            if (model.UserId == default)
-                throw new SocialNetworkException("Unable to identify user, userId entered incorrectly ");
+            var isProfileExist = Database.UserProfileRepository.FindAllWithDetails().Any(x => x.UserId == model.UserId);
+            if (isProfileExist )
+                throw new SocialNetworkException("This userProfile already exist in database");
 
             return Database.UserProfileRepository.AddAsync(_mapper.Map<UserProfile>(model));
         }

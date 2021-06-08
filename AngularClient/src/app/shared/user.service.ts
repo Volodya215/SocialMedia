@@ -22,6 +22,19 @@ export class UserService {
     }, { validator: this.comparePasswords })
   });
 
+
+  userProfile = this.fb.group({
+    Hobby: [''],
+    City: [''],
+    Work: [''],
+    About: ['']
+  });
+
+  userData = this.fb.group({
+    Email: ['', Validators.email],
+    FullName: ['']
+  });
+
   comparePasswords(fb: FormGroup) {
     let confirmPswrdCtrl = fb.get('ConfirmPassword');
 
@@ -41,6 +54,24 @@ export class UserService {
       Password: this.formModel.value.Passwords.Password
     };
     return this.http.post(this.BaseURI + '/User/Register', body);
+  }
+
+  userUpdate() {
+    var body = {
+      Email: this.userData.value.Email,
+      FullName: this.userData.value.FullName
+    }
+    return this.http.put(this.BaseURI + "/User/Update", body);
+  }
+
+  userProfileUpdate() {
+    var body = {
+      Hobby: this.userProfile.value.Hobby,
+      City: this.userProfile.value.City,
+      Work: this.userProfile.value.Work,
+      About: this.userProfile.value.About
+    }
+    return this.http.put(this.BaseURI + "/UserProfile/Update", body);
   }
 
   login(formData: any) {

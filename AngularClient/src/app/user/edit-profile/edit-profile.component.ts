@@ -1,7 +1,8 @@
 import { HttpEventType } from '@angular/common/http';
-import { UrlResolver } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
 import { UploadImageService } from 'src/app/shared/upload-image.service';
+import { UserService } from 'src/app/shared/user.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-edit-profile',
@@ -13,17 +14,65 @@ export class EditProfileComponent implements OnInit {
   imageUrl: any;
   fileToUpload: any;
   userName: any;
-  isImageLoading: boolean = true;
+  isImageLoading: boolean = false;
+  userDetails: any;
 
-  constructor(private imageService : UploadImageService) { }
+  constructor(private imageService : UploadImageService, public service: UserService, private toastr: ToastrService) { }
 
   ngOnInit(): void {
     this.userName = localStorage.getItem('registerUser');
 
     this.getImageFromService();
-    if(!this.isImageLoading) {
-      this.imageUrl = "https://bootdey.com/img/Content/avatar/avatar7.png";
-    }
+
+    this.service.getUserProfile(this.userName).subscribe(
+      (res : any) => {
+        this.userDetails = res;
+
+        this.service.userData.setValue({
+          Email: res.email,
+          FullName: res.fullName
+        });
+
+        this.service.userProfile.setValue({
+          Hobby: res.hobby,
+          City: res.city,
+          Work: res.work,
+          About: res.about
+        });
+      },
+      err => {
+        console.log(err);
+      },
+    );
+  }
+
+  onSubmitChange() {
+    this.service.userUpdate().subscribe(
+      (res: any) => {
+        if (res.succeeded) {
+          this.toastr.success('Data updated!', 'User data updated');
+        } else {
+          this.toastr.error('Something went wrong', 'Updating failed.');
+        }
+      },
+      err => {
+        console.log(err);
+      }
+    );
+
+    this.service.userProfileUpdate().subscribe(
+      (res: any) => {
+        if (res.succeeded) {
+          this.toastr.success('Data updated!', 'User profile data updated');
+        } else {
+          this.toastr.error('Something went wrong', 'Updating failed.');
+        }
+      },
+      err => {
+        console.log(err);
+      }
+    );
+    
   }
 
   handleFileInput(target: any) {
@@ -38,7 +87,7 @@ export class EditProfileComponent implements OnInit {
     reader.readAsDataURL(this.fileToUpload);
   }
 
-  OnSubmit(Image: any){
+  OnSubmitFoto(Image: any){
    this.imageService.postFile(this.fileToUpload, this.userName).subscribe(
      data =>{
        console.log('done');
@@ -50,6 +99,7 @@ export class EditProfileComponent implements OnInit {
   createImageFromBlob(image: Blob) {
          let reader = new FileReader();
          reader.addEventListener("load", () => {
+          this.isImageLoading = true;
             this.imageUrl = reader.result;
          }, false);
   
@@ -59,7 +109,6 @@ export class EditProfileComponent implements OnInit {
   }
 
   getImageFromService() {
-    this.isImageLoading = true;
     this.imageService.downloadFile(this.userName).subscribe(data => {
 
       switch (data.type) {
@@ -69,7 +118,6 @@ export class EditProfileComponent implements OnInit {
             const downloadedFile = new Blob([data.body as BlobPart], { type: data.body?.type });
 
             this.createImageFromBlob(downloadedFile);
-            this.isImageLoading = false;
             break;
     }
     }, error => {

@@ -63,8 +63,6 @@ namespace SocialNetwork_DAL.Repositories
         {
             Context.Entry(entity).State = EntityState.Modified;
 
-            Context.SaveChanges();
-
             var toUpdate = _entities.FirstOrDefault(x => x.Id == entity.Id);
             if (toUpdate != null)
                 toUpdate = entity;
