@@ -16,5 +16,7 @@ namespace SocialNetwork_BLL.Interfaces
         Task<PageStatistic> GetUserPageStatisticByUserName(string userName);
 
         Task<IEnumerable<string>> GetAllUser();
+
+        Task<IdentityResult> UpdateUser(string id, UserModel model);
     }
 }

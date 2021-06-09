@@ -22,14 +22,20 @@ namespace SocialNetwork_BLL.Services
             _mapper = mapper;
         }
 
-        public Task AddAsync(MessageModel model)
+        public async Task AddAsync(MessageModel model)
         {
             if (model == default)
                 throw new SocialNetworkException("Message is equal null");
-            if (model.Id <= 0 || model.ChatId <= 0 || model.AuthorId == default || model.Content == default)
+            if (model.ChatId <= 0 || model.AuthorId == default || model.Content == default)
                 throw new SocialNetworkException("Incorrect data in message model");
 
-            return Database.MessageRepository.AddAsync(_mapper.Map<Message>(model));
+            var chat = await Database.ChatRepository.GetByIdAsync(model.ChatId);
+            chat.LastModify = DateTime.Now;
+            await Database.ChatRepository.Update(chat);
+
+            model.MessageTime = DateTime.Now;
+
+           await  Database.MessageRepository.AddAsync(_mapper.Map<Message>(model));
         }
 
         public Task DeleteByIdAsync(int modelId)

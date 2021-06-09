@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AdminPanelComponent } from './admin-panel/admin-panel.component';
 import { AuthGuard } from './auth/auth.guard';
+import { UserChatsComponent } from './chat/user-chats/user-chats.component';
 import { ForbiddenComponent } from './forbidden/forbidden.component';
 import { HomeComponent } from './home/home.component';
 import { EditProfileComponent } from './user/edit-profile/edit-profile.component';
@@ -23,7 +24,8 @@ const routes: Routes = [
   {path: 'forbidden', component: ForbiddenComponent},
   {path: 'adminpanel', component: AdminPanelComponent, canActivate:[AuthGuard], data: {permittedRoles: ['Admin']} },
   {path: 'guest', component: GuestUserComponent, canActivate:[AuthGuard]},
-  {path: 'editProfile', component: EditProfileComponent, canActivate:[AuthGuard]}
+  {path: 'editProfile', component: EditProfileComponent, canActivate:[AuthGuard]},
+  {path: 'chats', component: UserChatsComponent, canActivate:[AuthGuard]}
 ];
 
 @NgModule({

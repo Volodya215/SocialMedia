@@ -50,7 +50,7 @@ namespace SocialNetwork_Web.Controllers
         }
 
         [HttpGet("GetImage/{userName}")]
-       // [Authorize(Roles = "Customer")]
+        [Authorize(Roles = "Customer")]
         // POST: /api/Image/GetImage/{userName}
         public async Task<IActionResult> GetImage(string userName)
         {

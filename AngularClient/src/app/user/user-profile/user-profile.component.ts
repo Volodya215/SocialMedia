@@ -19,13 +19,19 @@ export class UserProfileComponent implements OnInit {
   isFriends: boolean = true;
   isOnMyPage: boolean = true;
   isImageLoading: boolean = false;
-  imageUrl: any;
+  imageUrl: any = "";
 
   constructor(private userService: UserService, private subscribeService: SubscribeService, 
-    private postService: PostService, private router: Router, private imageService: UploadImageService) { }
+    private postService: PostService, private router: Router, private imageService: UploadImageService) {
+      this.currentUserName = localStorage.getItem('currentUser');
+      if(this.imageUrl === "") {
+        this.getImageFromService();
+      }
+  
+     }
 
   ngOnInit(): void {
-    this.currentUserName = localStorage.getItem('currentUser');
+
     this.registerUserName = localStorage.getItem('registerUser');
     this.isOnMyPage = this.currentUserName === this.registerUserName;
 
@@ -53,10 +59,6 @@ export class UserProfileComponent implements OnInit {
       this.getPageStatistic();
     });
 
-    this.getImageFromService();
-    if(!this.isImageLoading) {
-      
-    }
   }
 
   getPageStatistic() {
@@ -103,6 +105,10 @@ export class UserProfileComponent implements OnInit {
 
   onEditProfile() {
     this.router.navigateByUrl('/editProfile');
+  }
+
+  onChats() {
+    this.router.navigateByUrl('/chats');
   }
 
   createImageFromBlob(image: Blob) {

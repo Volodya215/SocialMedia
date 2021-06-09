@@ -102,5 +102,18 @@ namespace SocialNetwork_BLL.Services
 
             return users.Select(x => x.UserName);
         }
+
+        public async Task<IdentityResult> UpdateUser(string id, UserModel model)
+        {
+            if(id == default)
+                throw new SocialNetworkException("Incorrect id value");
+
+            var user = await _userManager.FindByIdAsync(id);
+
+            user.Email = model.Email;
+            user.FullName = model.FullName;
+
+            return await _userManager.UpdateAsync(user);
+        }
     }
 }

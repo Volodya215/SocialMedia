@@ -27,6 +27,8 @@ import { NavigationPanelComponent } from './navigation-panel/navigation-panel.co
 import { FilterPipe } from './table.pipe';
 import { EditProfileComponent } from './user/edit-profile/edit-profile.component';
 import { UploadImageService } from './shared/upload-image.service';
+import { UserChatsComponent } from './chat/user-chats/user-chats.component';
+import { ChatService } from './shared/chat.service';
 
 
 @NgModule({
@@ -45,7 +47,8 @@ import { UploadImageService } from './shared/upload-image.service';
     GuestUserComponent,
     NavigationPanelComponent,
     FilterPipe,
-    EditProfileComponent
+    EditProfileComponent,
+    UserChatsComponent
   ],
   imports: [
     BrowserModule,
@@ -58,7 +61,7 @@ import { UploadImageService } from './shared/upload-image.service';
     }),
     FormsModule
   ],
-  providers: [UserService, PostService, SubscribeService, UploadImageService,
+  providers: [UserService, PostService, SubscribeService, UploadImageService, ChatService,
   {
     provide: HTTP_INTERCEPTORS,
     useClass: AuthInterceptor,

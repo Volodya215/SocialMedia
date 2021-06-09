@@ -83,6 +83,7 @@ export class EditProfileComponent implements OnInit {
     var reader = new FileReader();
     reader.onload = (event:any) => {
       this.imageUrl = event.target.result;
+      this.isImageLoading = true;
     }
     reader.readAsDataURL(this.fileToUpload);
   }
@@ -90,6 +91,7 @@ export class EditProfileComponent implements OnInit {
   OnSubmitFoto(Image: any){
    this.imageService.postFile(this.fileToUpload, this.userName).subscribe(
      data =>{
+      this.toastr.success('Foto changed!', 'New user foto');
        console.log('done');
        Image.value = null;
      }

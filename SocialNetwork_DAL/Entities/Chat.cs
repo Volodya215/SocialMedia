@@ -11,6 +11,9 @@ namespace SocialNetwork_DAL.Entities
         public string FirstUserId { get; set; }
         [ForeignKey("SecondUser")]
         public string SecondUserId { get; set; }
+        public DateTime LastModify { get; set; }
+        [NotMapped]
+        public string Name { get; set; }
 
         public virtual User FirstUser { get; set; }
         public virtual User SecondUser { get; set; }

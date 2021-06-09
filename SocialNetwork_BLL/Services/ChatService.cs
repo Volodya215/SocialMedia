@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Identity;
 using SocialNetwork_BLL.Interfaces;
 using SocialNetwork_BLL.Models;
 using SocialNetwork_BLL.Validation;
@@ -16,10 +17,12 @@ namespace SocialNetwork_BLL.Services
     {
         private readonly IUnitOfWork Database;
         private readonly IMapper _mapper;
-        public ChatService(IUnitOfWork iow, IMapper mapper)
+        private readonly UserManager<User> _userManager;
+        public ChatService(IUnitOfWork iow, IMapper mapper, UserManager<User> userManager)
         {
             Database = iow;
             _mapper = mapper;
+            _userManager = userManager;
         }
 
         public IEnumerable<MessageModel> GetAllMessagesFromChatByChatId(int chatId)
@@ -39,9 +42,40 @@ namespace SocialNetwork_BLL.Services
             if (userId == default)
                 throw new SocialNetworkException("User id is incorrect");
 
-            var chats = Database.ChatRepository.FindAllWithDetails().Where(x => x.FirstUserId == userId || x.SecondUserId == userId).AsEnumerable();
+            var chats = Database.ChatRepository.FindAllWithDetails().Where(x => x.FirstUserId == userId || x.SecondUserId == userId).OrderByDescending(x => x.LastModify).ToList();
+
+            for (int i = 0; i < chats.Count; i++)
+            {
+                chats[i].Name = chats[i].FirstUserId == userId ? chats[i].SecondUser.UserName : chats[i].FirstUser.UserName;
+            }
 
             return _mapper.Map<IEnumerable<ChatModel>>(chats);
+        }
+
+        public async Task<int> GetChatIdByUsernames(string firstUser, string secondUser)
+        {
+            if (firstUser == default || secondUser == default)
+                throw new SocialNetworkException("Usernames are incorrect");
+
+            var chat = Database.ChatRepository.FindAllWithDetails()
+                            .Where(x => x.FirstUser.UserName == firstUser && x.SecondUser.UserName == secondUser || x.SecondUser.UserName == firstUser && x.FirstUser.UserName == secondUser)
+                            .FirstOrDefault();
+            if(chat == default)
+            {
+                var first = await _userManager.FindByNameAsync(firstUser);
+                var second = await _userManager.FindByNameAsync(secondUser);
+
+                await AddAsync(new ChatModel()
+                {
+                    FirstUserId = first.Id,
+                    SecondUserId= second.Id
+                });
+
+                chat = Database.ChatRepository.FindAllWithDetails().First(x => x.FirstUserId == first.Id && x.SecondUserId == second.Id);
+                return chat.Id;
+            }
+
+            return chat.Id;
         }
 
 
@@ -73,6 +107,7 @@ namespace SocialNetwork_BLL.Services
 
             if (model.FirstUserId == default || model.SecondUserId == default)
                 throw new SocialNetworkException("Unable to identify chat, users Id or chat Id entered incorrectly");
+            model.LastModify = DateTime.Now;
 
             return Database.ChatRepository.AddAsync(_mapper.Map<Chat>(model));
         }

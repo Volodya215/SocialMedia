@@ -24,17 +24,14 @@ namespace SocialNetwork_Web.Controllers
 
         private readonly ApplicationSettings _appSettings;
         private readonly IUserService _service;
-        private readonly UserManager<User> _userManager;
 
-        public UserController(IOptions<ApplicationSettings> appSettings, IUserService service, UserManager<User> userManager)
+        public UserController(IOptions<ApplicationSettings> appSettings, IUserService service)
         {
             _appSettings = appSettings.Value;
             _service = service;
-            _userManager = userManager;
         }
 
-        [HttpPost]
-        [Route("Register")]
+        [HttpPost("Register")]
         //POST : /api/User/Register
         public async Task<Object> PostUser(UserModel model)
         {
@@ -52,8 +49,7 @@ namespace SocialNetwork_Web.Controllers
             }
         }
 
-        [HttpPost]
-        [Route("Login")]
+        [HttpPost("Login")]
         //POST : /api/User/Login
         public async Task<IActionResult> Login(LoginModel model)
         {
@@ -72,7 +68,7 @@ namespace SocialNetwork_Web.Controllers
         }
 
         [HttpGet("{userName}/statistic")]
-        // [Authorize(Roles = "Customer")]
+        [Authorize(Roles = "Customer")]
         // GET: /api/User/Volodya/statistic
         public async Task<ActionResult<Object>> GetUserStatistic(string userName)
         {
@@ -117,12 +113,8 @@ namespace SocialNetwork_Web.Controllers
             try
             {
                 string userId = User.Claims.First(x => x.Type == "UserID").Value;
-                var user = await _userManager.FindByIdAsync(userId);
 
-                user.Email = userModel.Email;
-                user.FullName = userModel.FullName;
-
-                var result = await _userManager.UpdateAsync(user);
+                var result = await _service.UpdateUser(userId, userModel);
                 return Ok(result);
             }
             catch (Exception ex)

@@ -11,6 +11,11 @@ namespace SocialNetwork_BLL.Interfaces
 
         Task<TModel> GetByIdWithDetailsAsync(int id);
 
+        /// <summary>
+        /// Add element to database async
+        /// </summary>
+        /// <param name="model">Element</param>
+        /// <returns></returns>
         Task AddAsync(TModel model);
 
         Task UpdateAsync(TModel model);
