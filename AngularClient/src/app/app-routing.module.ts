@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AdminPanelComponent } from './admin-panel/admin-panel.component';
+import { ChatManagerComponent } from './admin-panel/chat-manager/chat-manager.component';
+import { UserManagerComponent } from './admin-panel/user-manager/user-manager.component';
 import { AuthGuard } from './auth/auth.guard';
 import { UserChatsComponent } from './chat/user-chats/user-chats.component';
 import { ForbiddenComponent } from './forbidden/forbidden.component';
@@ -22,7 +24,12 @@ const routes: Routes = [
   },
   {path: 'home', component: HomeComponent, canActivate:[AuthGuard] },
   {path: 'forbidden', component: ForbiddenComponent},
-  {path: 'adminpanel', component: AdminPanelComponent, canActivate:[AuthGuard], data: {permittedRoles: ['Admin']} },
+  {path: 'adminpanel', component: AdminPanelComponent, canActivate:[AuthGuard], data: {permittedRoles: ['Admin']},
+    children: [
+      { path: 'usermanagement', component: UserManagerComponent },
+      { path: 'chatmanagement', component: ChatManagerComponent }
+    ]
+  },
   {path: 'guest', component: GuestUserComponent, canActivate:[AuthGuard]},
   {path: 'editProfile', component: EditProfileComponent, canActivate:[AuthGuard]},
   {path: 'chats', component: UserChatsComponent, canActivate:[AuthGuard]}

@@ -29,6 +29,8 @@ import { EditProfileComponent } from './user/edit-profile/edit-profile.component
 import { UploadImageService } from './shared/upload-image.service';
 import { UserChatsComponent } from './chat/user-chats/user-chats.component';
 import { ChatService } from './shared/chat.service';
+import { UserManagerComponent } from './admin-panel/user-manager/user-manager.component';
+import { ChatManagerComponent } from './admin-panel/chat-manager/chat-manager.component';
 
 
 @NgModule({
@@ -48,7 +50,9 @@ import { ChatService } from './shared/chat.service';
     NavigationPanelComponent,
     FilterPipe,
     EditProfileComponent,
-    UserChatsComponent
+    UserChatsComponent,
+    UserManagerComponent,
+    ChatManagerComponent
   ],
   imports: [
     BrowserModule,

@@ -96,11 +96,18 @@ namespace SocialNetwork_BLL.Services
             return statistic;
         }
 
-        public async Task<IEnumerable<string>> GetAllUser()
+        public async Task<IEnumerable<string>> GetAllUsernames()
         {
             var users = await _userManager.GetUsersInRoleAsync("Customer");
 
             return users.Select(x => x.UserName);
+        }
+
+        public async Task<IEnumerable<UserModel>> GetAllUsers()
+        {
+            var users = await _userManager.GetUsersInRoleAsync("Customer");
+
+            return _mapper.Map<IEnumerable<UserModel>>(users);
         }
 
         public async Task<IdentityResult> UpdateUser(string id, UserModel model)
@@ -114,6 +121,30 @@ namespace SocialNetwork_BLL.Services
             user.FullName = model.FullName;
 
             return await _userManager.UpdateAsync(user);
+        }
+
+        public async Task<IdentityResult> DeleteUser(string id)
+        {
+            if (id == default)
+                throw new SocialNetworkException("Incorrect id value");
+
+            var user = await _userManager.FindByIdAsync(id);
+            var subs = Method(id);
+
+            foreach (var item in subs)
+            {
+                await Database.BloggerSubscriberRepository.DeleteByIdAsync(item);
+            }
+
+
+            var result = await _userManager.DeleteAsync(user);
+            return result;
+        }
+
+        public List<int> Method(string id)
+        {
+            var subs = Database.BloggerSubscriberRepository.FindAll().Where(x => x.BloggerId == id || x.SubscriberId == id).Select(x => x.Id).ToList();
+            return subs;
         }
     }
 }

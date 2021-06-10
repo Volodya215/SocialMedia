@@ -6,10 +6,12 @@ namespace SocialNetwork_DAL.Entities
 {
     public class BloggerSubscriber : BaseEntity
     {
-        public string BloggerId { get; set; }
-        public User Blogger { get; set; }
+        #nullable enable
+        public string? BloggerId { get; set; }
+        public string? SubscriberId { get; set; }
 
-        public string SubscriberId { get; set; }
+        #nullable disable
+        public User Blogger { get; set; }
         public User Subscriber { get; set; }
     }
 }

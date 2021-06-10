@@ -1,1 +1,23 @@
-<p>admin-panel works!</p>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/adminpanel/usermanagement">Social Network</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="/adminpanel/usermanagement">User list</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="/adminpanel/chatmanagement">Chat list</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <button class="btn btn-danger m-2 my-sm-0 " (click)="onLogout()">Logout</button>
+</nav>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<section class="container">
+    <router-outlet></router-outlet>
+</section>

@@ -90,6 +90,13 @@ export class UserService {
     return this.http.get(this.BaseURI + "/User/allUsers");
   }
 
+  getByAdminAllUser() {
+    return this.http.get(this.BaseURI + "/User/Admin/allUsers");
+  }
+
+  deleteUser(userId: string) {
+    return this.http.delete(this.BaseURI + "/User/Delete/" + userId);
+  }
 
   roleMatch(allowedRoles: any[]): boolean {
     var isMatch = false;

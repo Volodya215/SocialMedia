@@ -30,7 +30,12 @@ export class LoginComponent implements OnInit {
         localStorage.setItem('token', res.token);
         localStorage.setItem('currentUser', res.userName);
         localStorage.setItem('registerUser', res.userName);
-        this.router.navigateByUrl('/home');
+        if(res.userName == "admin") {
+          this.router.navigateByUrl('/adminpanel/usermanagement');
+        } else {
+          this.router.navigateByUrl('/home');
+        }
+
       },
       err => {
         if (err.status == 400)

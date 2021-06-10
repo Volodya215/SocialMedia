@@ -7,6 +7,11 @@ namespace SocialNetwork_BLL.Interfaces
 {
     public interface IMessageService : ICrud<MessageModel>
     {
+        /// <summary>
+        /// Returns all messages written by a user with a specified ID 
+        /// </summary>
+        /// <param name="id">User id</param>
+        /// <returns>List of messages</returns>
         IEnumerable<MessageModel> GetAllUserMessagesByUserId(string id);
     }
 }

@@ -89,13 +89,30 @@ namespace SocialNetwork_Web.Controllers
         }
 
         [HttpGet("allUsers")]
-        [Authorize(Roles = "Admin, Customer")]
+        [Authorize(Roles = "Customer")]
         // GET: /api/User/allUsers
-        public async Task<ActionResult<IEnumerable<string>>> GetAllUsers()
+        public async Task<ActionResult<IEnumerable<string>>> GetAllUsernames()
         {
             try
             {
-                var users = await _service.GetAllUser();
+                var users = await _service.GetAllUsernames();
+
+                return Ok(users);
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
+        }
+
+        [HttpGet("Admin/allUsers")]
+        [Authorize(Roles = "Admin")]
+        // GET: /api/User/admin/allUsers
+        public async Task<ActionResult<IEnumerable<UserModel>>> GetAllUsers()
+        {
+            try
+            {
+                var users = await _service.GetAllUsers();
 
                 return Ok(users);
             }
@@ -115,6 +132,22 @@ namespace SocialNetwork_Web.Controllers
                 string userId = User.Claims.First(x => x.Type == "UserID").Value;
 
                 var result = await _service.UpdateUser(userId, userModel);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+        }
+
+        [HttpDelete("Delete/{id}")]
+        [Authorize(Roles = "Admin")]
+        // PUT: /api/User/Delete/1
+        public async Task<ActionResult> DeleteUser(string id)
+        {
+            try
+            {
+                var result = await _service.DeleteUser(id);
                 return Ok(result);
             }
             catch (Exception ex)
