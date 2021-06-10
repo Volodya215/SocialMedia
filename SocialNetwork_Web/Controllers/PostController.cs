@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SocialNetwork_BLL.Interfaces;
 using SocialNetwork_BLL.Models;
@@ -20,7 +21,7 @@ namespace SocialNetwork_Web.Controllers
         }
 
         [HttpGet("{userName}")]
-        // [Authorize(Roles = "Customer")]
+        [Authorize(Roles = "Customer")]
         // GET: /api/Post/Volodya
         public ActionResult<Object> GetAllUserPostByUserName(string userName)
         {
@@ -39,6 +40,7 @@ namespace SocialNetwork_Web.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Customer")]
         // POST: /api/Post
         public async Task<ActionResult> PostAdding(PostModel postModel)
         {

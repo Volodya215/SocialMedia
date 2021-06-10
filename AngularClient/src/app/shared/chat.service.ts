@@ -11,21 +11,28 @@ export class ChatService {
     public messageAdded_Observable = new Subject();
 
     getAllChats() {
-        return this.http.get(this.BaseURI + "/Chat/AllUserChats");
+        return this.http.get(this.BaseURI + '/Chat/AllUserChats');
     }
 
     getAllMessages(chatId: number) {
-        return this.http.get(this.BaseURI + "/Chat/" + chatId + "/AllMessages");
-    }
-
-    addMessage(message: Message) {
-        return this.http.post(this.BaseURI + '/Chat/AddMessage', message);
+        return this.http.get(this.BaseURI + '/Chat/' + chatId + '/AllMessages');
     }
 
     getChatId(firstUsername: string, secondUsername: string) {
         return this.http.get(this.BaseURI + '/Chat/GetChatId/' + firstUsername + "/" + secondUsername);
     }
 
+    addMessage(message: Message) {
+        return this.http.post(this.BaseURI + '/Message/AddMessage', message);
+    }
+
+    deleteMessage(id: any) {
+        return this.http.delete(this.BaseURI + '/Message/Delete/' + id);
+    }
+
+    getAllAdminMessages() {
+        return this.http.get(this.BaseURI + "/Message/GetAll");
+    }
 }
 
 export class Message {

@@ -53,6 +53,13 @@ namespace SocialNetwork_BLL.Services
             return _mapper.Map<IEnumerable<MessageModel>>(models);
         }
 
+        public IEnumerable<MessageAdminModel> GetAllMessagesForAdmin()
+        {
+            var models = Database.MessageRepository.FindAllWithDetails().AsEnumerable();
+
+            return _mapper.Map<IEnumerable<MessageAdminModel>>(models);
+        }
+
         public IEnumerable<MessageModel> GetAllUserMessagesByUserId(string id)
         {
             if (id == default)

@@ -1,1 +1,27 @@
-<p>chat-manager works!</p>
+<div class="m-3 text-center">
+    <h2>Message management</h2>
+</div>
+
+<div>
+    <table class="table">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">Author</th>
+                <th scope="col">Chat</th>
+                <th scope="col">Content</th>
+                <th scope="col">MessageTime</th>
+                <th scope="col">Delete user</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let message of allMessages">
+                <td>{{message.authorName}}</td>
+                <td>{{message.chatName}}</td>
+                <td>{{message.content}}</td>
+                <td>{{message.messageTime | date:'dd-MM-yyyy hh:mm:ss a'}}</td>
+                <td><button class="btn btn-danger" (click)="deleteMessage(message.id)"><i class="fa fa-trash"></i>Delete</button></td>
+            </tr>
+
+        </tbody>
+    </table>
+</div>

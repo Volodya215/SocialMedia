@@ -4,7 +4,7 @@ import { Post, PostService } from '../shared/post.service';
 @Component({
   selector: 'app-add-post',
   templateUrl: './add-post.component.html',
-  styleUrls: []
+  styleUrls: ['./add-post.component.css']
 })
 export class AddPostComponent implements OnInit {
   @ViewChild('closeBtn') closeBtn: ElementRef | undefined;

@@ -30,8 +30,6 @@ namespace SocialNetwork_BLL.Services
 
             var userProfile = Database.UserProfileRepository.FindAllWithDetails().Where(x => x.User.UserName == userName).FirstOrDefault();
 
-            if (userProfile == default)
-                throw new SocialNetworkException("User with that userName not found!!!");
 
             return _mapper.Map<UserProfileModel>(userProfile);
         }

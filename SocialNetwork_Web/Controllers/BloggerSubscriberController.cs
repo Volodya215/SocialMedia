@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SocialNetwork_BLL.Interfaces;
 using SocialNetwork_BLL.Models;
@@ -20,7 +21,7 @@ namespace SocialNetwork_Web.Controllers
         }
 
         [HttpPost]
-        // [Authorize(Roles = "Customer")]
+        [Authorize(Roles = "Customer")]
         // POST: /api/BloggerSubscriber
         public async Task<ActionResult> PostBlogSubsc(BloggerSubscriberModel model)
         {
@@ -39,7 +40,7 @@ namespace SocialNetwork_Web.Controllers
         }
 
         [HttpGet("{userName}/followers")]
-        // [Authorize(Roles = "Customer")]
+        [Authorize(Roles = "Customer")]
         // GET: /api/BloggerSubscriber/Volodya/followers
         public ActionResult<IEnumerable<string>> GetUserFollowers(string userName)
         {
@@ -60,7 +61,7 @@ namespace SocialNetwork_Web.Controllers
         }
 
         [HttpGet("{userName}/following")]
-        // [Authorize(Roles = "Customer")]
+        [Authorize(Roles = "Customer")]
         // GET: /api/BloggerSubscriber/Volodya/following
         public ActionResult<IEnumerable<string>> GetUserFollowing(string userName)
         {
@@ -81,7 +82,7 @@ namespace SocialNetwork_Web.Controllers
         }
 
         [HttpGet("isFriends/{bloggerUserName}/{subscriberUserName}")]
-        // [Authorize(Roles = "Customer")]
+        [Authorize(Roles = "Customer")]
         // GET: /api/BloggerSubscriber/isFriend/bloggerUserName/subscriberUserName
         public ActionResult<bool> IsFriends(string bloggerUserName, string subscriberUserName)
         {
@@ -100,7 +101,7 @@ namespace SocialNetwork_Web.Controllers
         }
 
         [HttpDelete("{bloggerUserName}/{subscriberUserName}")]
-        // [Authorize(Roles = "Customer")]
+        [Authorize(Roles = "Customer")]
         // DELETE: /api/BloggerSubscriber
         public async Task<ActionResult> DeleteBlogSubsc(string bloggerUserName, string subscriberUserName)
         {

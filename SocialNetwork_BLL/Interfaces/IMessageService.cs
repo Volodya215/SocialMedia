@@ -13,5 +13,12 @@ namespace SocialNetwork_BLL.Interfaces
         /// <param name="id">User id</param>
         /// <returns>List of messages</returns>
         IEnumerable<MessageModel> GetAllUserMessagesByUserId(string id);
+
+        /// <summary>
+        /// Returns all messages from database 
+        /// </summary>
+        /// <param name="id">User id</param>
+        /// <returns>List of messages data</returns>
+        IEnumerable<MessageAdminModel> GetAllMessagesForAdmin();
     }
 }

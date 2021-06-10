@@ -33,12 +33,17 @@ export class UserChatsComponent implements OnInit {
       (res: any) => {
         this.currentChatID = res;
         this.showMessage(this.currentChatID, this.currentUserName);
+        this.getChats();
       },
       err => {
         console.log(err);
+        this.getChats();
       },
     );
 
+  }
+
+  getChats() {
     this.chatService.getAllChats().subscribe(
       (res: any) => {
         this.chats = res;
@@ -47,12 +52,7 @@ export class UserChatsComponent implements OnInit {
         console.log(err);
       },
     );
-
   }
-
-arr() {
-  
-}
 
   showMessage(chatId: number, chatName: string) {
     this.currentChatID = chatId;

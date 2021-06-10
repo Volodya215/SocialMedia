@@ -22,6 +22,7 @@ using System.Threading.Tasks;
 using SocialNetwork_BLL.Services;
 using SocialNetwork_BLL.Interfaces;
 using SocialNetwork_BLL.Models;
+using Microsoft.OpenApi.Models;
 
 namespace SocialNetwork_Web
 {
@@ -72,13 +73,14 @@ namespace SocialNetwork_Web
             services.AddCors();
 
             // Jwt Authentication
-            var key = Encoding .UTF8.GetBytes(Configuration["ApplicationSettings:JWT_Secret"].ToString());
+            var key = Encoding.UTF8.GetBytes(Configuration["ApplicationSettings:JWT_Secret"].ToString());
             services.AddAuthentication(x =>
             {
                 x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                 x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
                 x.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-            }).AddJwtBearer(x => {
+            }).AddJwtBearer(x =>
+            {
                 x.RequireHttpsMetadata = false;
                 x.SaveToken = false;
                 x.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
@@ -92,7 +94,36 @@ namespace SocialNetwork_Web
             });
 
             services.AddControllers();
-            services.AddSwaggerGen();
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo
+                {
+                    Title = "My API",
+                    Version = "v1"
+                });
+                c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+                {
+                    In = ParameterLocation.Header,
+                    Description = "Please insert JWT with Bearer into field",
+                    Name = "Authorization",
+                    Type = SecuritySchemeType.ApiKey
+                });
+                c.AddSecurityRequirement(new OpenApiSecurityRequirement
+                {
+                    {
+                        new OpenApiSecurityScheme
+                        {
+                            Reference = new OpenApiReference
+                            {
+                                Type = ReferenceType.SecurityScheme,
+                                Id = "Bearer"
+                            }
+                        },
+                        new string[] { }
+                    }
+
+                });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -110,7 +141,7 @@ namespace SocialNetwork_Web
             }
 
             app.UseCors(builder =>
-                builder.WithOrigins(Configuration["ApplicationSettings:Client_URL"].ToString())
+                builder./*WithOrigins(Configuration["ApplicationSettings:Client_URL"].ToString())*/AllowAnyOrigin()
                 .AllowAnyHeader().AllowAnyMethod());
 
             app.UseRouting();

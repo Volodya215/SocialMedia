@@ -20,6 +20,11 @@ namespace SocialNetwork_BLL
 
             CreateMap<Message, MessageModel>().ReverseMap();
 
+            CreateMap<Message, MessageAdminModel>()
+                .ForMember(p => p.AuthorName, c => c.MapFrom(message => message.Author.UserName))
+                .ForMember(p => p.ChatName, c => c.MapFrom(message => message.Chat.FirstUser.UserName + message.Chat.SecondUser.UserName))
+                .ReverseMap();
+
             CreateMap<Post, PostModel>().ReverseMap();
 
             CreateMap<User, UserModel>()

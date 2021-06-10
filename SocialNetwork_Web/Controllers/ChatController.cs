@@ -15,11 +15,9 @@ namespace SocialNetwork_Web.Controllers
     public class ChatController : ControllerBase
     {
         private readonly IChatService _service;
-        private readonly IMessageService _messageService;
-        public ChatController(IChatService service, IMessageService messageService)
+        public ChatController(IChatService service)
         {
             _service = service;
-            _messageService = messageService;
         }
 
         [HttpGet("GetChatId/{firstUsername}/{secondUsername}")]
@@ -77,26 +75,6 @@ namespace SocialNetwork_Web.Controllers
             }
         }
 
-
-        [HttpPost("AddMessage")]
-        [Authorize(Roles = "Customer")]
-        // POST: /api/Chat/AddMessage
-        public async Task<ActionResult> AddMessageToChat(MessageModel messageModel)
-        {
-            if (messageModel == default || messageModel.ChatId < 0 || messageModel.Content == default)
-                return BadRequest("Incorrect model");
-            try
-            {
-                string userId = User.Claims.First(x => x.Type == "UserID").Value;
-                messageModel.AuthorId = userId;
-                await _messageService.AddAsync(messageModel);
-                return Ok();
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(new { message = ex.Message });
-            }
-        }
 
         [HttpDelete("Delete/{id}")]
         [Authorize(Roles = "Admin")]
