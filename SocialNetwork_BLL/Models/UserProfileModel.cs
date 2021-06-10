@@ -4,6 +4,9 @@ using System.Text;
 
 namespace SocialNetwork_BLL.Models
 {
+    /// <summary>
+    /// Contains data about user profile
+    /// </summary>
     public class UserProfileModel
     {
         public int Id { get; set; }

@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 
 namespace SocialNetwork_DAL
 {
+    /// <summary>
+    /// The UnitOfWork class provides access to repositories through separate properties and defines a common context for both repositories 
+    /// </summary>
     public class UnitOfWork : IUnitOfWork
     {
         private readonly SocialNetworkContext _context;
@@ -20,6 +23,10 @@ namespace SocialNetwork_DAL
         public IChatRepository ChatRepository { get; private set; }
         public IBloggerSubscriberRepository BloggerSubscriberRepository { get; private set; }
 
+        /// <summary>
+        /// In the constructor, we create an object of context and repositories 
+        /// </summary>
+        /// <param name="option">The option to be used by DBContext</param>
         public UnitOfWork(DbContextOptions option)
         {
             _context = new SocialNetworkContext(option);

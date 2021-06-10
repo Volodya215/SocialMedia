@@ -24,22 +24,11 @@ namespace SocialNetwork_Web.Controllers
             _service = service;
         }
 
-        [HttpGet]
-        [Authorize(Roles = "Customer")]
-        // GET: /api/UserProfile
-        public async Task<object> GetUserProfile()
-        {
-            string userId = User.Claims.First(x => x.Type == "UserID").Value;
-            var user = await _userManager.FindByIdAsync(userId);
-
-            return new
-            {
-                user.FullName,
-                user.Email,
-                user.UserName
-            };
-        }
-
+        /// <summary>
+        /// Get user profile by username
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <returns>User profile</returns>
         [HttpGet("{userName}")]
         [Authorize(Roles = "Customer")]
         // GET: /api/UserProfile/Volodya
@@ -73,7 +62,11 @@ namespace SocialNetwork_Web.Controllers
             }
         }
 
-
+        /// <summary>
+        /// Update exist user profile
+        /// </summary>
+        /// <param name="userModel"></param>
+        /// <returns></returns>
         [HttpPut("Update")]
         [Authorize(Roles = "Customer")]
         // PUT: /api/UserProfile/Update

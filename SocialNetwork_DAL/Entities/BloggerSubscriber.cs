@@ -4,6 +4,9 @@ using System.Text;
 
 namespace SocialNetwork_DAL.Entities
 {
+    /// <summary>
+    /// Contains data about blogger and his subscriber
+    /// </summary>
     public class BloggerSubscriber : BaseEntity
     {
         #nullable enable

@@ -10,11 +10,22 @@ using System.Threading.Tasks;
 
 namespace SocialNetwork_DAL.Repositories
 {
+    /// <summary>
+    /// Generic repository foe work with TEntity data
+    /// </summary>
     public class Repository<TEntity> : IRepository<TEntity> where TEntity : BaseEntity
     {
         protected readonly DbContext Context;
 
+        /// <summary>
+        /// Save the table for this repository 
+        /// </summary>
         protected readonly DbSet<TEntity> _entities;
+
+        /// <summary>
+        /// Repository constructor in which transfer a context for work with a database
+        /// </summary>
+        /// <param name="myDbContext">Context for work with SocialNetwork database</param>
         public Repository(DbContext context)
         {
             Context = context;

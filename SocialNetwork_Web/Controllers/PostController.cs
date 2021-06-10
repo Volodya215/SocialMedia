@@ -20,6 +20,11 @@ namespace SocialNetwork_Web.Controllers
             _service = service;
         }
 
+        /// <summary>
+        /// Get all user posts by username
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <returns>List of posts</returns>
         [HttpGet("{userName}")]
         [Authorize(Roles = "Customer")]
         // GET: /api/Post/Volodya
@@ -39,6 +44,11 @@ namespace SocialNetwork_Web.Controllers
             }
         }
 
+        /// <summary>
+        /// Add new user post
+        /// </summary>
+        /// <param name="postModel"></param>
+        /// <returns></returns>
         [HttpPost]
         [Authorize(Roles = "Customer")]
         // POST: /api/Post

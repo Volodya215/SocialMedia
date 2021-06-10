@@ -12,10 +12,18 @@ using System.Threading.Tasks;
 
 namespace SocialNetwork_BLL.Services
 {
+    /// <summary>
+    /// Service for processing data related to user profiles
+    /// </summary>
     public class UserProfileService : IUserProfileService
     {
         private readonly IMapper _mapper;
         private readonly IUnitOfWork Database;
+        /// <summary>
+        /// Injection dependence in this service 
+        /// </summary>
+        /// <param name="iow">Class Unit of Work</param>
+        /// <param name="mapper">Mapper for mapping data</param>
         public UserProfileService(IUnitOfWork iow, IMapper mapper)
         {
             Database = iow;

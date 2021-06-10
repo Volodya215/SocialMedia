@@ -13,11 +13,21 @@ using System.Threading.Tasks;
 
 namespace SocialNetwork_BLL.Services
 {
+    /// <summary>
+    /// Service for processing data related to subscribers
+    /// </summary>
     public class BloggerSubscriberService : IBloggerSubscriberService
     {
         private readonly IUnitOfWork Database;
         private readonly IMapper _mapper;
         private readonly UserManager<User> _userManager;
+
+        /// <summary>
+        /// Injection dependence in this service 
+        /// </summary>
+        /// <param name="iow">Unit of Work</param>
+        /// <param name="mapper">Mapper for mapping data</param>
+        /// <param name="userManager">To work with the date of the user in the database </param>
         public BloggerSubscriberService(IUnitOfWork iow, IMapper mapper, UserManager<User> userManager)
         {
             Database = iow;
@@ -65,7 +75,6 @@ namespace SocialNetwork_BLL.Services
                                     .Where(x => x.Blogger.UserName == userName)
                                     .Select(x => x.Subscriber.UserName)
                                     .AsEnumerable();
-
             return followers;
         }
 

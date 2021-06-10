@@ -6,11 +6,20 @@ using System.Text;
 
 namespace SocialNetwork_DAL.Entities
 {
+    /// <summary>
+    /// Contains data about user post
+    /// </summary>
     public class Post : BaseEntity
     {
+        /// <summary>
+        /// The topic of the post 
+        /// </summary>
         [Required]
         [Column(TypeName = "nvarchar(100)")]
         public string Topic { get; set; }
+        /// <summary>
+        /// Posting time 
+        /// </summary>
         public DateTime DateOfPost { get; set; }
         [Required]
         public string Content { get; set; }

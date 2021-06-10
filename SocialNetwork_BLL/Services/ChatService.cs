@@ -13,11 +13,21 @@ using System.Threading.Tasks;
 
 namespace SocialNetwork_BLL.Services
 {
+    /// <summary>
+    /// Service for processing data related to chats
+    /// </summary>
     public class ChatService : IChatService
     {
         private readonly IUnitOfWork Database;
         private readonly IMapper _mapper;
         private readonly UserManager<User> _userManager;
+
+        /// <summary>
+        /// Injection dependence in this service 
+        /// </summary>
+        /// <param name="iow">Class Unit of Work</param>
+        /// <param name="mapper">Mapper for mapping data</param>
+        /// <param name="userManager">To work with the date of the user in the database </param>
         public ChatService(IUnitOfWork iow, IMapper mapper, UserManager<User> userManager)
         {
             Database = iow;

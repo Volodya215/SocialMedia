@@ -20,6 +20,12 @@ namespace SocialNetwork_Web.Controllers
             _service = service;
         }
 
+        /// <summary>
+        /// Get chat id by usernames of his members
+        /// </summary>
+        /// <param name="firstUsername"></param>
+        /// <param name="secondUsername"></param>
+        /// <returns>Chat id</returns>
         [HttpGet("GetChatId/{firstUsername}/{secondUsername}")]
         [Authorize(Roles = "Customer")]
         // GET: /api/Chat/GetChatId/vasya/Volodya
@@ -39,6 +45,10 @@ namespace SocialNetwork_Web.Controllers
             }
         }
 
+        /// <summary>
+        /// Get all user chats by his id
+        /// </summary>
+        /// <returns>List of chats</returns>
         [HttpGet("AllUserChats")]
         [Authorize(Roles = "Customer")]
         // GET: /api/Chat/AllUserChats
@@ -56,6 +66,11 @@ namespace SocialNetwork_Web.Controllers
             }
         }
 
+        /// <summary>
+        /// Get all messages from chat by chat id
+        /// </summary>
+        /// <param name="chatId">Chat id</param>
+        /// <returns>List of messages</returns>
         [HttpGet("{chatId}/AllMessages")]
         [Authorize(Roles = "Customer")]
         // GET: /api/Chat/1/AllMessages
@@ -75,7 +90,11 @@ namespace SocialNetwork_Web.Controllers
             }
         }
 
-
+        /// <summary>
+        /// Delete chat by his id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpDelete("Delete/{id}")]
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteChat(int id)

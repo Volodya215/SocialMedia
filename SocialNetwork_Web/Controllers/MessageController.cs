@@ -20,6 +20,10 @@ namespace SocialNetwork_Web.Controllers
             _service = service;
         }
 
+        /// <summary>
+        /// Get all messages from system
+        /// </summary>
+        /// <returns>List of messages</returns>
         [HttpGet("GetAll")]
         [Authorize(Roles = "Admin")]
         // GET: /api/Message/GetAll
@@ -37,6 +41,11 @@ namespace SocialNetwork_Web.Controllers
             }
         }
 
+        /// <summary>
+        /// Add new message to the chat
+        /// </summary>
+        /// <param name="messageModel"></param>
+        /// <returns></returns>
         [HttpPost("AddMessage")]
         [Authorize(Roles = "Customer")]
         // POST: /api/Message/AddMessage
@@ -57,6 +66,11 @@ namespace SocialNetwork_Web.Controllers
             }
         }
 
+        /// <summary>
+        /// Update exist message
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPut("Update")]
         [Authorize(Roles = "Admin")]
         // DELETE: /api/Message/Update
@@ -76,6 +90,11 @@ namespace SocialNetwork_Web.Controllers
             }
         }
 
+        /// <summary>
+        /// Delete message by his id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpDelete("Delete/{id}")]
         [Authorize(Roles = "Admin")]
         // DELETE: /api/Message/Delete/1

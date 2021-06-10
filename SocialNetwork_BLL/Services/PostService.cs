@@ -12,10 +12,18 @@ using System.Threading.Tasks;
 
 namespace SocialNetwork_BLL.Services
 {
+    /// <summary>
+    /// Service for processing data related to posts
+    /// </summary>
     public class PostService : IPostService
     {
         private readonly IUnitOfWork Database;
         private readonly IMapper _mapper;
+        /// <summary>
+        /// Injection dependence in this service 
+        /// </summary>
+        /// <param name="iow">Class Unit of Work</param>
+        /// <param name="mapper">Mapper for mapping data</param>
         public PostService(IUnitOfWork iow, IMapper mapper)
         {
             Database = iow;

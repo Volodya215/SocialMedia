@@ -6,6 +6,9 @@ using System.Text;
 
 namespace SocialNetwork_DAL.Entities
 {
+    /// <summary>
+    /// Contains user profile information 
+    /// </summary>
     public class UserProfile : BaseEntity
     {
         [Required]

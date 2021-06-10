@@ -56,6 +56,7 @@ namespace SocialNetwork_Web
             IMapper mapper = mapperConfig.CreateMapper();
             services.AddSingleton(mapper);
 
+            // Inject service
             services.AddTransient<IUserProfileService, UserProfileService>();
             services.AddTransient<IPostService, PostService>();
             services.AddTransient<IChatService, ChatService>();
@@ -70,6 +71,8 @@ namespace SocialNetwork_Web
                 options.Password.RequireLowercase = false;
                 options.Password.RequireUppercase = false;
             });
+
+            // Connects Cross-Origin Resource Sharing
             services.AddCors();
 
             // Jwt Authentication
@@ -94,6 +97,8 @@ namespace SocialNetwork_Web
             });
 
             services.AddControllers();
+
+            // Swagger settings 
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo
@@ -140,8 +145,9 @@ namespace SocialNetwork_Web
                 app.UseDeveloperExceptionPage();
             }
 
+            // Settings Cross-Origin Resource Sharing
             app.UseCors(builder =>
-                builder./*WithOrigins(Configuration["ApplicationSettings:Client_URL"].ToString())*/AllowAnyOrigin()
+                builder.WithOrigins(Configuration["ApplicationSettings:Client_URL"].ToString())
                 .AllowAnyHeader().AllowAnyMethod());
 
             app.UseRouting();

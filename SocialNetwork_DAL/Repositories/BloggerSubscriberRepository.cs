@@ -8,8 +8,15 @@ using System.Text;
 
 namespace SocialNetwork_DAL.Repositories
 {
+    /// <summary>
+    /// Repository for working with subscriber data 
+    /// </summary>
     public class BloggerSubscriberRepository : Repository<BloggerSubscriber>, IBloggerSubscriberRepository
     {
+        /// <summary>
+        /// Repository constructor in which transfer a context for work with a database
+        /// </summary>
+        /// <param name="myDbContext">Context for work with SocialNetwork database</param>
         public BloggerSubscriberRepository(SocialNetworkContext myDbContext)
             : base(myDbContext)
         {

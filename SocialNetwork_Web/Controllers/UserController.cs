@@ -31,6 +31,11 @@ namespace SocialNetwork_Web.Controllers
             _service = service;
         }
 
+        /// <summary>
+        /// Register new user in system
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPost("Register")]
         //POST : /api/User/Register
         public async Task<Object> PostUser(UserModel model)
@@ -49,6 +54,11 @@ namespace SocialNetwork_Web.Controllers
             }
         }
 
+        /// <summary>
+        /// Login user in system
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns>Authentication token</returns>
         [HttpPost("Login")]
         //POST : /api/User/Login
         public async Task<IActionResult> Login(LoginModel model)
@@ -67,6 +77,11 @@ namespace SocialNetwork_Web.Controllers
 
         }
 
+        /// <summary>
+        /// Returns user page statistics such as count of posts, followers and following
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <returns>User psge statistic</returns>
         [HttpGet("{userName}/statistic")]
         [Authorize(Roles = "Customer")]
         // GET: /api/User/Volodya/statistic
@@ -88,6 +103,10 @@ namespace SocialNetwork_Web.Controllers
             }
         }
 
+        /// <summary>
+        /// Get all usernames register in system
+        /// </summary>
+        /// <returns>List of all usernames</returns>
         [HttpGet("allUsers")]
         [Authorize(Roles = "Customer")]
         // GET: /api/User/allUsers
@@ -105,6 +124,10 @@ namespace SocialNetwork_Web.Controllers
             }
         }
 
+        /// <summary>
+        /// Get all users register in system
+        /// </summary>
+        /// <returns>List of users</returns>
         [HttpGet("Admin/allUsers")]
         [Authorize(Roles = "Admin")]
         // GET: /api/User/admin/allUsers
@@ -122,6 +145,11 @@ namespace SocialNetwork_Web.Controllers
             }
         }
 
+        /// <summary>
+        /// Update user data
+        /// </summary>
+        /// <param name="userModel"></param>
+        /// <returns></returns>
         [HttpPut("Update")]
         [Authorize(Roles = "Customer")]
         // PUT: /api/User/Update
@@ -140,6 +168,11 @@ namespace SocialNetwork_Web.Controllers
             }
         }
 
+        /// <summary>
+        /// Delete user from system
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpDelete("Delete/{id}")]
         [Authorize(Roles = "Admin")]
         // PUT: /api/User/Delete/1

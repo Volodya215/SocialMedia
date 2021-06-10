@@ -9,8 +9,15 @@ using System.Threading.Tasks;
 
 namespace SocialNetwork_DAL.Repositories
 {
+    /// <summary>
+    /// Repository for working with posts data 
+    /// </summary>
     public class PostRepository : Repository<Post>, IPostRepository
     {
+        /// <summary>
+        /// Repository constructor in which transfer a context for work with a database
+        /// </summary>
+        /// <param name="myDbContext">Context for work with SocialNetwork database</param>
         public PostRepository(SocialNetworkContext myDbContext)
             : base(myDbContext)
         {

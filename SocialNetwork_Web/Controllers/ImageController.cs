@@ -22,6 +22,11 @@ namespace SocialNetwork_Web.Controllers
             _hostingEnvironment = environment;
         }
 
+        /// <summary>
+        /// Add user foto to storage 
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <returns></returns>
         [HttpPost("UploadImage/{userName}")]
         [Authorize(Roles = "Customer")]
         // POST: /api/Image/UploadImage/{userName}
@@ -49,6 +54,11 @@ namespace SocialNetwork_Web.Controllers
 
         }
 
+        /// <summary>
+        /// Download user foto from storage
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <returns>User foto</returns>
         [HttpGet("GetImage/{userName}")]
         [Authorize(Roles = "Customer")]
         // POST: /api/Image/GetImage/{userName}
@@ -78,7 +88,11 @@ namespace SocialNetwork_Web.Controllers
 
         }
 
-
+        /// <summary>
+        /// Get type of file
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns>type</returns>
         private string GetContentType(string path)
         {
             var provider = new FileExtensionContentTypeProvider();

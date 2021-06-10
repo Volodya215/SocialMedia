@@ -20,6 +20,11 @@ namespace SocialNetwork_Web.Controllers
             _service = service;
         }
 
+        /// <summary>
+        /// Adds a new subscriber 
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPost]
         [Authorize(Roles = "Customer")]
         // POST: /api/BloggerSubscriber
@@ -39,6 +44,11 @@ namespace SocialNetwork_Web.Controllers
             }
         }
 
+        /// <summary>
+        /// Get all user followers
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <returns>List of usernames of followers</returns>
         [HttpGet("{userName}/followers")]
         [Authorize(Roles = "Customer")]
         // GET: /api/BloggerSubscriber/Volodya/followers
@@ -60,6 +70,11 @@ namespace SocialNetwork_Web.Controllers
             }
         }
 
+        /// <summary>
+        /// Get all user following
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <returns>List of usernames of following</returns>
         [HttpGet("{userName}/following")]
         [Authorize(Roles = "Customer")]
         // GET: /api/BloggerSubscriber/Volodya/following
@@ -81,6 +96,12 @@ namespace SocialNetwork_Web.Controllers
             }
         }
 
+        /// <summary>
+        /// Checks if the user is subscribed to this blogger 
+        /// </summary>
+        /// <param name="bloggerUserName"></param>
+        /// <param name="subscriberUserName"></param>
+        /// <returns>True if subscribe, otherwise false</returns>
         [HttpGet("isFriends/{bloggerUserName}/{subscriberUserName}")]
         [Authorize(Roles = "Customer")]
         // GET: /api/BloggerSubscriber/isFriend/bloggerUserName/subscriberUserName
@@ -100,6 +121,12 @@ namespace SocialNetwork_Web.Controllers
             }
         }
 
+        /// <summary>
+        /// Delete user subscribe
+        /// </summary>
+        /// <param name="bloggerUserName"></param>
+        /// <param name="subscriberUserName"></param>
+        /// <returns></returns>
         [HttpDelete("{bloggerUserName}/{subscriberUserName}")]
         [Authorize(Roles = "Customer")]
         // DELETE: /api/BloggerSubscriber

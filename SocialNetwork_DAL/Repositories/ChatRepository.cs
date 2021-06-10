@@ -9,8 +9,15 @@ using System.Threading.Tasks;
 
 namespace SocialNetwork_DAL.Repositories
 {
+    /// <summary>
+    /// Repository for working with chats data 
+    /// </summary>
     public class ChatRepository : Repository<Chat>, IChatRepository
     {
+        /// <summary>
+        /// Repository constructor in which transfer a context for work with a database
+        /// </summary>
+        /// <param name="myDbContext">Context for work with SocialNetwork database</param>
         public ChatRepository(SocialNetworkContext myDbContext)
             : base(myDbContext)
         {
