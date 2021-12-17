@@ -76,12 +76,21 @@ namespace SocialNetwork_BLL.Services
                 FullName = model.FullName
             };
 
-            var result = await _userManager.CreateAsync(user, model.Password);
-            if (result.Errors.Any())
-                return result;
-            await _userManager.AddToRoleAsync(user, model.Role);
+            try
+            {
+                var result = await _userManager.CreateAsync(user, model.Password);
 
-            return result;
+                if (result.Errors.Any())
+                    return result;
+                await _userManager.AddToRoleAsync(user, model.Role);
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
         }
 
         public async Task<PageStatistic> GetUserPageStatisticByUserName(string userName)
