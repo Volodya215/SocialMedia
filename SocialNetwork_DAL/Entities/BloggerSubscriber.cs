@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace SocialNetwork_DAL.Entities
+﻿namespace SocialNetwork_DAL.Entities
 {
     /// <summary>
     /// Contains data about blogger and his subscriber

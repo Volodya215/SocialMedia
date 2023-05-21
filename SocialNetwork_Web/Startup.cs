@@ -63,6 +63,7 @@ namespace SocialNetwork_Web
             services.AddTransient<IMessageService, MessageService>();
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IBloggerSubscriberService, BloggerSubscriberService>();
+            services.AddTransient<IInterestsService, InterestsService>();
 
             services.AddDefaultIdentity<User>().AddRoles<IdentityRole>().AddEntityFrameworkStores<SocialNetworkContext>();
 
@@ -106,28 +107,28 @@ namespace SocialNetwork_Web
                     Title = "My API",
                     Version = "v1"
                 });
-                c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
-                {
-                    In = ParameterLocation.Header,
-                    Description = "Please insert JWT with Bearer into field",
-                    Name = "Authorization",
-                    Type = SecuritySchemeType.ApiKey
-                });
-                c.AddSecurityRequirement(new OpenApiSecurityRequirement
-                {
-                    {
-                        new OpenApiSecurityScheme
-                        {
-                            Reference = new OpenApiReference
-                            {
-                                Type = ReferenceType.SecurityScheme,
-                                Id = "Bearer"
-                            }
-                        },
-                        new string[] { }
-                    }
+                //c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+                //{
+                //    In = ParameterLocation.Header,
+                //    Description = "Please insert JWT with Bearer into field",
+                //    Name = "Authorization",
+                //    Type = SecuritySchemeType.ApiKey
+                //});
+                //c.AddSecurityRequirement(new OpenApiSecurityRequirement
+                //{
+                //    {
+                //        new OpenApiSecurityScheme
+                //        {
+                //            Reference = new OpenApiReference
+                //            {
+                //                Type = ReferenceType.SecurityScheme,
+                //                Id = "Bearer"
+                //            }
+                //        },
+                //        new string[] { }
+                //    }
 
-                });
+                //});
             });
         }
 

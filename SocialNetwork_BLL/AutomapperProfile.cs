@@ -39,6 +39,20 @@ namespace SocialNetwork_BLL
                 .ForMember(p => p.BloggerUserName, c => c.MapFrom(blogServ => blogServ.Blogger.UserName))
                 .ForMember(p => p.SubscriberUserName, c => c.MapFrom(blogServ => blogServ.Subscriber.UserName))
                 .ReverseMap();
+
+            CreateMap<UserInterests, UserInterestModel>()
+                .ForMember(p => p.InterestId, c => c.MapFrom(x => x.InterestId))
+                .ForMember(p => p.UserName, c => c.MapFrom(x => x.User.UserName))
+                .ReverseMap();
+
+            CreateMap<UserInterests, InterestModel>()
+                .ForMember(p => p.Id, c => c.MapFrom(x => x.InterestId))
+                .ForMember(p => p.Name, c => c.MapFrom(x => x.Interest.Name));
+
+            CreateMap<Interest, InterestModel>()
+                .ForMember(p => p.Id, c => c.MapFrom(x => x.Id))
+                .ForMember(p => p.Name, c => c.MapFrom(x => x.Name))
+                .ReverseMap();
         }
     }
 }

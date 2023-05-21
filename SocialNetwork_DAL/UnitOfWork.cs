@@ -22,6 +22,8 @@ namespace SocialNetwork_DAL
 
         public IChatRepository ChatRepository { get; private set; }
         public IBloggerSubscriberRepository BloggerSubscriberRepository { get; private set; }
+        public IInterestRepository InterestRepository { get; private set; }
+        public IUserInterestsRepository UserInterestsRepository { get; private set; }
 
         /// <summary>
         /// In the constructor, we create an object of context and repositories 
@@ -35,6 +37,8 @@ namespace SocialNetwork_DAL
             MessageRepository = new MessageRepository(_context);
             ChatRepository = new ChatRepository(_context);
             BloggerSubscriberRepository = new BloggerSubscriberRepository(_context);
+            InterestRepository = new InterestsRepository(_context);
+            UserInterestsRepository = new UserInterestsRepository(_context);
         }
 
         public Task<int> SaveAsync()

@@ -19,15 +19,18 @@ namespace SocialNetwork_BLL.Services
     {
         private readonly IUnitOfWork Database;
         private readonly IMapper _mapper;
+        private readonly IBloggerSubscriberService _bloggerSubscriberService;
+
         /// <summary>
         /// Injection dependence in this service 
         /// </summary>
         /// <param name="iow">Class Unit of Work</param>
         /// <param name="mapper">Mapper for mapping data</param>
-        public PostService(IUnitOfWork iow, IMapper mapper)
+        public PostService(IUnitOfWork iow, IMapper mapper, IBloggerSubscriberService bloggerSubscriberService)
         {
             Database = iow;
             _mapper = mapper;
+            _bloggerSubscriberService = bloggerSubscriberService;
         }
 
         public Task AddAsync(PostModel model)
@@ -54,6 +57,22 @@ namespace SocialNetwork_BLL.Services
             var models = Database.PostRepository.FindAll().AsEnumerable();
 
             return _mapper.Map<IEnumerable<PostModel>>(models);
+        }
+
+        public IEnumerable<PostModel> GetAllFriendsPosts(string userName)
+        {
+            if (userName == default)
+                throw new SocialNetworkException("Incorrect value of userName");
+
+            var following = _bloggerSubscriberService.GetAllFollowingByUserName(userName);
+
+            var posts = new List<PostModel>();
+            foreach(var user in following)
+            {
+                posts.AddRange(GetAllPostsByUserName(user));
+            }
+
+            return posts.OrderByDescending(x => x.DateOfPost);
         }
 
         public IEnumerable<PostModel> GetAllPostsByUserName(string userName)

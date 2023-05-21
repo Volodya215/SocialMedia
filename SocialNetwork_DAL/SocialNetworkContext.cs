@@ -45,6 +45,9 @@ namespace SocialNetwork_DAL
         /// </summary>
         public DbSet<BloggerSubscriber> BloggerSubscribers { get; set; }
 
+        public DbSet<Interest> Interests { get; set; }
+        public DbSet<UserInterests> UserInterests { get; set; }
+
         /// <summary>
         /// Setting up table interaction 
         /// </summary>

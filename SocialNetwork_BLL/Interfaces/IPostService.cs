@@ -13,5 +13,7 @@ namespace SocialNetwork_BLL.Interfaces
         /// <param name="userName">User username</param>
         /// <returns>List of posts model</returns>
         IEnumerable<PostModel> GetAllPostsByUserName(string userName);
+
+        IEnumerable<PostModel> GetAllFriendsPosts(string userName);
     }
 }

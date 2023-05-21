@@ -35,6 +35,9 @@ namespace SocialNetwork_DAL.Interfaces
         /// </summary>
         IBloggerSubscriberRepository BloggerSubscriberRepository { get; }
 
+        IInterestRepository InterestRepository { get; }
+        IUserInterestsRepository UserInterestsRepository { get; }
+
         /// <summary>
         /// Save all changes to the database  
         /// </summary>

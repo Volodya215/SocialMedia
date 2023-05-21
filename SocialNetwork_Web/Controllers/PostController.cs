@@ -44,6 +44,26 @@ namespace SocialNetwork_Web.Controllers
             }
         }
 
+        [HttpGet("Friends/{userName}")]
+        [Authorize(Roles = "Customer")]
+        // GET: /api/Post/Friends/Volodya
+        public ActionResult<Object> GetAllFriendsPostByUserName(string userName)
+        {
+            if (userName == default)
+                return BadRequest();
+
+            try
+            {
+                var posts = _service.GetAllFriendsPosts(userName);
+
+                return Ok(posts);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+        }
+
         /// <summary>
         /// Add new user post
         /// </summary>
