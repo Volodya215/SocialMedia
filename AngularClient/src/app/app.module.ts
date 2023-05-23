@@ -19,6 +19,7 @@ import { ForbiddenComponent } from './forbidden/forbidden.component';
 import { ShowPostComponent } from './show-post/show-post.component';
 import { AddPostComponent } from './add-post/add-post.component';
 import { PostService } from './shared/post.service';
+import { InterestsService } from './shared/interest.service';
 import { UserProfileComponent } from './user/user-profile/user-profile.component';
 import { SubscribeService } from './shared/subscribe.service';
 import { ListUsersComponent } from './user/list-users/list-users.component';
@@ -65,7 +66,7 @@ import { ChatManagerComponent } from './admin-panel/chat-manager/chat-manager.co
     }),
     FormsModule
   ],
-  providers: [UserService, PostService, SubscribeService, UploadImageService, ChatService,
+  providers: [UserService, PostService, InterestsService, SubscribeService, UploadImageService, ChatService,
   {
     provide: HTTP_INTERCEPTORS,
     useClass: AuthInterceptor,

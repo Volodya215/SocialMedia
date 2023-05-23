@@ -2,6 +2,7 @@ import { HttpEventType } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { UploadImageService } from 'src/app/shared/upload-image.service';
 import { UserService } from 'src/app/shared/user.service';
+import { UserInterest, InterestsService } from 'src/app/shared/interest.service';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
@@ -16,13 +17,27 @@ export class EditProfileComponent implements OnInit {
   userName: any;
   isImageLoading: boolean = false;
   userDetails: any;
+  selectedInterests: any;
+  allInterests: any;
+  showModal: boolean = false;
 
-  constructor(private imageService : UploadImageService, public service: UserService, private toastr: ToastrService) { }
+  constructor(private imageService : UploadImageService, public service: UserService, public interestService: InterestsService, private toastr: ToastrService) { }
 
   ngOnInit(): void {
     this.userName = localStorage.getItem('registerUser');
 
     this.getImageFromService();
+
+    this.interestService.getAllInterests().subscribe(
+      (res: any) => {
+        this.allInterests = res;
+      },
+      err => {
+        console.log(err);
+      },
+    );
+
+    this.getUserInterests();
 
     this.service.getUserProfile(this.userName).subscribe(
       (res : any) => {
@@ -126,6 +141,74 @@ export class EditProfileComponent implements OnInit {
       this.isImageLoading = false;
       console.log(error);
     });
+}
+
+getUserInterests() {
+      this.interestService.getAllUserInterests(this.userName).subscribe((res : any) => {
+        this.selectedInterests = res;
+      }, error => {
+      console.log(error);
+    });
+}
+
+openModal() {
+  this.showModal = true;
+}
+
+closeModal() {
+  this.showModal = false;
+}
+
+toggleInterest(event: any, interestId: number) {
+  const checked = event.target.checked;
+
+  if (checked) {
+    this.addUserInterests(interestId);
+  } else {
+    this.deleteUserInterests(interestId);
+  }
+}
+
+isInterestSelected(interest: any): boolean {
+  return this.selectedInterests.find((x: { id: any; }) => x.id == interest.id);
+}
+
+addUserInterests(id: number) {
+  let inter = new UserInterest();
+  inter.interestId = id;
+  inter.userName = this.userName;
+
+  this.interestService.addUserInterest(inter).subscribe(
+    (res: any) => {
+    if (res.succeeded) {
+      this.toastr.success('Interest added!', 'New user interest added!');
+    } else {
+      this.toastr.error('Something went wrong', 'Request to add user ineterst failed.');
+    }
+  },
+  err => {
+    console.log(err);
+  });
+}
+
+deleteUserInterests(id: number) {
+  let inter = new UserInterest();
+  inter.interestId = id;
+  inter.userName = this.userName;
+
+  this.interestService.deleteInterest(this.userName, id).subscribe(
+    (res: any) => {
+      if (res.succeeded) {
+        this.toastr.success('Interest deleted!', 'Interest deleted!');
+        this.getUserInterests();
+      } else {
+        this.toastr.error('Something went wrong', 'Request to delete user ineterst failed.');
+      }
+    },
+    err => {
+      console.log(err);
+    }
+  );
 }
 
 }

@@ -1,0 +1,60 @@
+.modal-interest {
+    position: absolute;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 5% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+}
+
+.interest-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+.interest-list li {
+    margin-bottom: 5px;
+}
+
+.interest-checkbox {
+    margin-right: 5px;
+}
+
+.close-btn {
+    float: right;
+    cursor: pointer;
+    font-size: 32px;
+    width: auto;
+    text-align: right;
+    margin-right: 12px;
+}
+
+.interest-btn {
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.selected-interests {
+    margin-top: 20px;
+}
+
+.selected-interests span {
+    display: inline-block;
+    padding: 5px;
+    margin-right: 5px;
+    margin-bottom: 5px;
+    background-color: #ccc;
+    border-radius: 5px;
+    cursor: pointer;
+}

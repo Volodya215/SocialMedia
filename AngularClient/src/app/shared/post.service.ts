@@ -18,6 +18,10 @@ export class PostService {
         return this.http.get(this.BaseURI + "/Post/" + userName);
     }
 
+    getFriendsPosts(userName: string) {
+        return this.http.get(this.BaseURI + "/Friends/Post/" + userName)
+    }
+
     notifyPostAddition(){
         this.postAdded_Observable.next();
     }

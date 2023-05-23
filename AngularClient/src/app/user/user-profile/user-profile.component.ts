@@ -5,6 +5,7 @@ import { PostService } from 'src/app/shared/post.service';
 import { Subscribe, SubscribeService } from 'src/app/shared/subscribe.service';
 import { UploadImageService } from 'src/app/shared/upload-image.service';
 import { UserService } from 'src/app/shared/user.service';
+import { UserInterest, InterestsService } from 'src/app/shared/interest.service';
 
 @Component({
   selector: 'app-user-profile',
@@ -20,8 +21,9 @@ export class UserProfileComponent implements OnInit {
   isOnMyPage: boolean = true;
   isImageLoading: boolean = false;
   imageUrl: any = "";
+  selectedInterests: any;
 
-  constructor(private userService: UserService, private subscribeService: SubscribeService, 
+  constructor(private userService: UserService, private interestService: InterestsService, private subscribeService: SubscribeService, 
     private postService: PostService, private router: Router, private imageService: UploadImageService) {
       this.currentUserName = localStorage.getItem('currentUser');
       if(this.imageUrl === "") {
@@ -44,6 +46,7 @@ export class UserProfileComponent implements OnInit {
       },
     );
 
+      this.getUserInterests();
       this.getPageStatistic();
 
     this.subscribeService.isFriend(this.currentUserName, this.registerUserName).subscribe(
@@ -60,6 +63,14 @@ export class UserProfileComponent implements OnInit {
     });
 
   }
+
+  getUserInterests() {
+      this.interestService.getAllUserInterests(this.currentUserName).subscribe((res : any) => {
+        this.selectedInterests = res;
+      }, error => {
+      console.log(error);
+    });
+}
 
   getPageStatistic() {
     this.userService.getPageStatistic(this.currentUserName).subscribe(

@@ -578,3 +578,21 @@ ul li {
     padding-left: 0;
     list-style: none;
 }
+
+.selected-interests {
+    margin-top: 20px;
+}
+
+.selected-interests span {
+    display: inline-block;
+    padding: 5px;
+    margin-right: 5px;
+    margin-bottom: 5px;
+    background-color: #ccc;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.form-group {
+    padding-left: 20px;
+}

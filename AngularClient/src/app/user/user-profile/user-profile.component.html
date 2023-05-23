@@ -21,6 +21,12 @@
                     <li><strong>About : </strong>{{userDetails?.about}}</li>
                 </ul>
             </div>
+            <div class="form-group">
+                <strong>User interests :</strong>
+                <div class="selected-interests">
+                    <span *ngFor="let interest of selectedInterests">{{interest?.name}}</span>
+                </div><br>
+            </div>
         </div>
     </div><br>
 
