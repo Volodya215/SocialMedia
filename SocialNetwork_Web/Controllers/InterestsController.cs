@@ -53,7 +53,7 @@ namespace SocialNetwork_Web.Controllers
         }
 
         [HttpPost("AddUserInterest")]
-        [Authorize(Roles = "Customer")]
+        //[Authorize(Roles = "Customer")]
         // POST: /api/Interests/AddUserInterest
         public async Task<ActionResult> PostAddUserInterest(UserInterestModel userInterest)
         {

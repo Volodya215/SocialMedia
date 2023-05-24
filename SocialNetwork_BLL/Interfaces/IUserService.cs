@@ -43,6 +43,8 @@ namespace SocialNetwork_BLL.Interfaces
         /// <returns>List of all users</returns>
         Task<IEnumerable<UserModel>> GetAllUsers();
 
+        Task<IEnumerable<string>> GetAllPossibleFriends(string userName);
+
         /// <summary>
         /// Asynchronously updates user data in the database
         /// </summary>

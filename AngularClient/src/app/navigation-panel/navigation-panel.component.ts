@@ -31,7 +31,8 @@ export class NavigationPanelComponent implements OnInit {
   }
 
   getAllUser() {
-    this.userService.getAllUser().subscribe(
+    this.registerUserName = localStorage.getItem('registerUser');
+    this.userService.getAllPossibleFriends(this.registerUserName).subscribe(
       (result: any) => {
         console.log('result is ', result);
   		  this.allUsers = result;

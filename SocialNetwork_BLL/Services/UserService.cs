@@ -24,17 +24,19 @@ namespace SocialNetwork_BLL.Services
         private readonly IMapper _mapper;
         private readonly UserManager<User> _userManager;
         private readonly IUnitOfWork Database;
+        private readonly IInterestsService _interestsService;
         /// <summary>
         /// Injection dependence in this service 
         /// </summary>
         /// <param name="iow">Class Unit of Work</param>
         /// <param name="mapper">Mapper for mapping data</param>
         /// <param name="userManager">To work with the date of the user in the database </param>
-        public UserService(IUnitOfWork iow, IMapper mapper, UserManager<User> userManager)
+        public UserService(IUnitOfWork iow, IMapper mapper, UserManager<User> userManager, IInterestsService interestsService)
         {
             Database = iow;
             _mapper = mapper;
             _userManager = userManager;
+            _interestsService = interestsService;
         }
 
         public async Task<string> LoginUser(LoginModel loginModel, string JWT_secret)
@@ -119,6 +121,44 @@ namespace SocialNetwork_BLL.Services
             var users = await _userManager.GetUsersInRoleAsync("Customer");
 
             return users.Select(x => x.UserName);
+        }
+
+        public async Task<IEnumerable<string>> GetAllPossibleFriends(string userName)
+        {
+            var users = await _userManager.GetUsersInRoleAsync("Customer");
+            var allUsers = users.Where(x => x.UserName != userName);
+
+            var userInterest = await _interestsService.GetListOfUserInterests(userName);
+
+            return allUsers.Select(x => new
+            {
+                Username = x.UserName,
+                SimilarityKoef = CalculateJaccardSimilarity(userInterest, _mapper.Map<IEnumerable<InterestModel>>(Database.UserInterestsRepository.FindAllUserInterestsById(x.Id).ToList()))
+            }).OrderByDescending(x => x.SimilarityKoef).Select(x => x.Username);
+        }
+
+        private static double CalculateJaccardSimilarity(IEnumerable<InterestModel> set1, IEnumerable<InterestModel> set2)
+        {
+            // Обчислюємо кількість спільних елементів
+            int intersectionCount = 0;
+            foreach (var element in set1)
+            {
+                if (set2.Any(x => x.Id == element.Id))
+                {
+                    intersectionCount++;
+                }
+            }
+
+            // Обчислюємо загальну кількість унікальних елементів
+            int unionCount = set1.Count() + set2.Count() - intersectionCount;
+
+            if (unionCount <= 0)
+                return 0;
+
+            // Обчислюємо ступінь схожості за алгоритмом Жаккара
+            double similarity = (double)intersectionCount / unionCount;
+
+            return similarity;
         }
 
         public async Task<IEnumerable<UserModel>> GetAllUsers()

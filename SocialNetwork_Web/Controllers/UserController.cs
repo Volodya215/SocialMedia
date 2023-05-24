@@ -124,6 +124,23 @@ namespace SocialNetwork_Web.Controllers
             }
         }
 
+        [HttpGet("allFriends/{userName}")]
+        //[Authorize(Roles = "Customer")]
+        // GET: /api/User/allUsers
+        public async Task<ActionResult<IEnumerable<string>>> GetAllUsernames(string userName)
+        {
+            try
+            {
+                var users = await _service.GetAllPossibleFriends(userName);
+
+                return Ok(users);
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
+        }
+
         /// <summary>
         /// Get all users register in system
         /// </summary>

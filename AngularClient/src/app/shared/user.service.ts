@@ -90,6 +90,10 @@ export class UserService {
     return this.http.get(this.BaseURI + "/User/allUsers");
   }
 
+  getAllPossibleFriends(userName: string) {
+    return this.http.get(this.BaseURI + "/User/allFriends/" + userName);
+  }
+
   getByAdminAllUser() {
     return this.http.get(this.BaseURI + "/User/Admin/allUsers");
   }
