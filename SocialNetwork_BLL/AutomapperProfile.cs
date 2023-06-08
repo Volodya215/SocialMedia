@@ -2,9 +2,7 @@
 using SocialNetwork_BLL.Models;
 using SocialNetwork_DAL.Entities;
 using System.Linq;
-using System;
-using System.Collections.Generic;
-using System.Text;
+
 
 namespace SocialNetwork_BLL
 {
@@ -25,7 +23,9 @@ namespace SocialNetwork_BLL
                 .ForMember(p => p.ChatName, c => c.MapFrom(message => message.Chat.FirstUser.UserName + message.Chat.SecondUser.UserName))
                 .ReverseMap();
 
-            CreateMap<Post, PostModel>().ReverseMap();
+            CreateMap<Post, PostModel>()
+                .ForMember(p => p.UserName, c => c.MapFrom(user => user.User.UserName))
+                .ReverseMap();
 
             CreateMap<User, UserModel>()
                 .ForMember(p => p.UserProfileId, c => c.MapFrom(user => user.UserProfile.Id))

@@ -13,6 +13,7 @@ import { from } from 'rxjs';
 import { UserService } from './shared/user.service';
 import { LoginComponent } from './user/login/login.component';
 import { HomeComponent } from './home/home.component';
+import { MainPageComponent } from './user/main-page/main-page.component';
 import { AuthInterceptor } from './auth/auth.interceptor';
 import { AdminPanelComponent } from './admin-panel/admin-panel.component';
 import { ForbiddenComponent } from './forbidden/forbidden.component';
@@ -25,6 +26,7 @@ import { SubscribeService } from './shared/subscribe.service';
 import { ListUsersComponent } from './user/list-users/list-users.component';
 import { GuestUserComponent } from './user/guest-user/guest-user.component';
 import { NavigationPanelComponent } from './navigation-panel/navigation-panel.component'
+import { FooterComponent } from './footer/footer.component'
 import { FilterPipe } from './table.pipe';
 import { EditProfileComponent } from './user/edit-profile/edit-profile.component';
 import { UploadImageService } from './shared/upload-image.service';
@@ -41,6 +43,7 @@ import { ChatManagerComponent } from './admin-panel/chat-manager/chat-manager.co
     RegistrationComponent,
     LoginComponent,
     HomeComponent,
+    MainPageComponent,
     AdminPanelComponent,
     ForbiddenComponent,
     ShowPostComponent,
@@ -49,6 +52,7 @@ import { ChatManagerComponent } from './admin-panel/chat-manager/chat-manager.co
     ListUsersComponent,
     GuestUserComponent,
     NavigationPanelComponent,
+    FooterComponent,
     FilterPipe,
     EditProfileComponent,
     UserChatsComponent,

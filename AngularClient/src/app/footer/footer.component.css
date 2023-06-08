@@ -1,0 +1,26 @@
+footer {
+  background-color: #f5f5f5;
+  padding: 20px;
+  text-align: center;
+}
+
+.footer-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+.company-info {
+  text-align: left;
+}
+
+.social-media ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.footer-bottom {
+  margin-top: 20px;
+}

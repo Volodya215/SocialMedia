@@ -19,7 +19,7 @@ export class PostService {
     }
 
     getFriendsPosts(userName: string) {
-        return this.http.get(this.BaseURI + "/Friends/Post/" + userName)
+        return this.http.get(this.BaseURI + "/Post/Friends/" + userName)
     }
 
     notifyPostAddition(){

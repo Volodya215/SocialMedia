@@ -30,6 +30,12 @@ export class NavigationPanelComponent implements OnInit {
     this.router.navigate(['/home']);
   }
 
+  toMainPage() {
+    this.registerUserName = localStorage.getItem('registerUser');
+    localStorage.setItem('currentUser', this.registerUserName);
+    this.router.navigate(['/main-page']);
+  }
+
   getAllUser() {
     this.registerUserName = localStorage.getItem('registerUser');
     this.userService.getAllPossibleFriends(this.registerUserName).subscribe(

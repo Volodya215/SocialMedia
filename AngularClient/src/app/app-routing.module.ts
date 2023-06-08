@@ -12,6 +12,7 @@ import { GuestUserComponent } from './user/guest-user/guest-user.component';
 import { LoginComponent } from './user/login/login.component';
 import { RegistrationComponent } from './user/registration/registration.component';
 import { UserComponent } from './user/user.component';
+import { MainPageComponent } from './user/main-page/main-page.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/user/login', pathMatch: 'full' },
@@ -23,6 +24,7 @@ const routes: Routes = [
     ]
   },
   {path: 'home', component: HomeComponent, canActivate:[AuthGuard] },
+  {path: 'main-page', component: MainPageComponent, canActivate:[AuthGuard] },
   {path: 'forbidden', component: ForbiddenComponent},
   {path: 'adminpanel', component: AdminPanelComponent, canActivate:[AuthGuard], data: {permittedRoles: ['Admin']},
     children: [
